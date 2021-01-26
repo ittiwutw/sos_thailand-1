@@ -42,6 +42,14 @@
           </a-row>
           <a-row type="flex" class="mb-5">
             <a-col :md="4" :xs="8">
+              <span>สถานที่ปฏิบัติงาน : </span>
+            </a-col>
+            <a-col :md='14' :xs="16">
+              <a-input v-model="location" placeholder="" />
+            </a-col>
+          </a-row>
+          <a-row type="flex" class="mb-5">
+            <a-col :md="4" :xs="8">
               <span>รับผิดชอบตาม : </span>
             </a-col>
             <a-col :md='14' :xs="16">
@@ -58,9 +66,9 @@
             </a-col>
             <a-col :md='14' :xs="16">
               <a-row type="flex" :gutter="[16,0]">
-                <a-col :span='8'><addressinput-subdistrict label="" placeholder="ตำบล/เเขวง"  v-model="subdistrict" /></a-col>
-                <a-col :span='8'><addressinput-district label="" placeholder="อำเภอ/เขต"  v-model="district" /></a-col>
-                <a-col :span='8'><addressinput-province label="" placeholder="จังหวัด"  v-model="province" /></a-col>
+                <a-col :span='12'><addressinput-subdistrict label="" placeholder="ตำบล/เเขวง"  v-model="subdistrict" /></a-col>
+                <a-col :span='12'><addressinput-district label="" placeholder="อำเภอ/เขต"  v-model="district" /></a-col>
+                <a-col :span='12' class="mt-5"><addressinput-province label="" placeholder="จังหวัด"  v-model="province" /></a-col>
               </a-row>
             </a-col>
           </a-row>
@@ -126,7 +134,9 @@ export default {
       tel: '',
       subdistrict: '',
       district: '',
-      province: ''
+      province: '',
+      location: '',
+      StateCreate: this.$router.currentRoute.query.State
     }
   },
   created () {
@@ -147,6 +157,10 @@ export default {
       this.name = user.name
       this.password = user.password
       this.job = user.job
+      this.location = user.adminCompanyName
+      this.subdistrict = user.adminSubDistrict
+      this.district = user.adminDistrict
+      this.province = user.adminProvince
       // this.area = user.area
       this.tel = user.tel
     } else {
@@ -189,8 +203,13 @@ export default {
         adminAreaType: adminAreaType,
         adminResponsibilityArea: CheckArea,
         logoImg: '',
-        userType: 'ADMIN'
+        userType: this.StateCreate,
+        adminProvince: this.province,
+        adminDistrict: this.district,
+        adminSubDistrict: this.subdistrict,
+        adminCompanyName: this.location
       }
+      console.log('data', data)
       await this.$store.dispatch('CreateUser', data)
       var res = this.$store.state.ModuleApi.CreateUser
       console.log('ข้อมูลหลังสร้าง user', res)
@@ -202,6 +221,13 @@ export default {
           timer: 2000
         })
         this.ResetForm()
+        if (this.StateCreate === 'ADMIN') {
+          this.$router.push({ path: '/ManageAdmin' })
+        } else if (this.StateCreate === 'SERVICE') {
+          this.$router.push({ path: '/ManageService' })
+        } else if (this.StateCreate === 'OFFICER') {
+          this.$router.push({ path: '/' })
+        }
       } else {
         this.$swal({
           icon: 'error',

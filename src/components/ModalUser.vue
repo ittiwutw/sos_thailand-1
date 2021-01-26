@@ -11,7 +11,7 @@
                 <span>{{props.name}}</span>
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
-                <span>หน่วยงาน :</span>
+                <span>ลักษณะงาน :</span>
                 <span>{{props.job}}</span>
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
@@ -20,7 +20,7 @@
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
                 <span>เขตรับผิดชอบ :</span>
-                <span>{{props.area}}</span>
+                <span>{{props.serviceDistrict}}</span>
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
                 <span>อีเมล์ :</span>
@@ -49,6 +49,11 @@ export default {
   computed: {
     Modal () {
       return this.$store.state.ModuleApi.Modal
+    }
+  },
+  watch: {
+    props (val) {
+      console.log('prop user', val)
     }
   },
   methods: {

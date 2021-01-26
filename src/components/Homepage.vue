@@ -24,6 +24,8 @@
         <v-app-bar app>
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title>{{Header}}</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <a-button @click="Logout">ออกจากระบบ</a-button>
         </v-app-bar>
         <v-main  class="div_overflow">
           <v-container grid-list-xs>
@@ -43,16 +45,16 @@ export default {
       picture: '',
       username: '',
       NavigatorSuperAdmin: [
-        { key: 'manu1', text: 'จัดการเจ้าหน้าที่', path: '/', name: 'ManageOfficer' },
+        // { key: 'manu1', text: 'จัดการเจ้าหน้าที่', path: '/', name: 'ManageOfficer' },
         { key: 'manu2', text: 'จัดการผู้ให้บริการ', path: '/ManageService', name: 'ManageService' },
-        { key: 'manu3', text: 'สร้างผู้ใช้งาน', path: '/CreateUser', name: 'CreateUser' },
+        { key: 'manu3', text: 'จัดการแอดมิน', path: '/ManageAdmin', name: 'ManageAdmin' },
         { key: 'manu4', text: 'เเก้ไขข้อมูล', path: '/EditUser', name: 'EditUser' }
         // { icon: 'mdi-chart-timeline-variant', text: 'ระบบบัญชีและการเงิน' },
         // { icon: 'mdi-chart-timeline-variant', text: 'ระบบบริหารบุคลากร', child: [{ name: 'Tbnoung' }] }
       ],
       NavigatorAdmin: [
         { key: 'manu1', text: 'จัดการเจ้าหน้าที่', path: '/', name: 'ManageOfficer' },
-        { key: 'manu2', text: 'จัดการผู้ให้บริการ', path: '/ManageService', name: 'ManageService' },
+        // { key: 'manu2', text: 'จัดการผู้ให้บริการ', path: '/ManageService', name: 'ManageService' },
         { key: 'manu3', text: 'รายงานการเเจ้งเหตุ', path: '/Report', name: 'Report' },
         { key: 'manu4', text: 'ประวัติการเเจ้งเหตุ', path: '/History', name: 'History' },
         { key: 'manu5', text: 'เเก้ไขข้อมูล', path: '/EditUser', name: 'EditUser' }
@@ -81,6 +83,7 @@ export default {
       this.Navigator = this.NavigatorAdmin
     } else if (checkuser.userType === 'SUPERADMIN') {
       this.Navigator = this.NavigatorSuperAdmin
+      this.$router.push({ path: '/ManageService' })
     } else {
       this.Navigator = this.NavigatorDefault
     }
@@ -107,7 +110,13 @@ export default {
         this.Header = 'เเก้ไขข้อมูล'
       } else if (this.$router.currentRoute.name === 'CreateUser') {
         this.Header = 'สร้างผู้ใช้งาน'
+      } else if (this.$router.currentRoute.name === 'ManageAdmin') {
+        this.Header = 'จัดการแอดมิน'
       }
+    },
+    Logout () {
+      localStorage.removeItem('user')
+      window.location.reload()
     }
   }
 }

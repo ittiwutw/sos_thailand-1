@@ -13,6 +13,7 @@ const routes = [
     children: [
       { path: '/', name: 'ManageOfficer', component: () => import('@/views/ManageOfficer') },
       { path: '/ManageService', name: 'ManageService', component: () => import('@/views/ManageService') },
+      { path: '/ManageAdmin', name: 'ManageAdmin', component: () => import('@/views/ManageAdmin') },
       { path: '/Report', name: 'Report', component: () => import('@/views/AccidentReport') },
       { path: '/History', name: 'History', component: () => import('@/views/IncidentHistory') },
       { path: '/EditUser', name: 'EditUser', component: () => import('@/views/EditUser') },

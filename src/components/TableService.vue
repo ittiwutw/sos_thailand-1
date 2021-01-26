@@ -6,7 +6,7 @@
         <v-card outlined>
             <v-data-table
             :headers="headers"
-            :items="props"
+            :items="DataTable"
             @page-count="pageCount = $event"
             :page.sync="page"
             :items-per-page="itemsPerPage"
@@ -16,7 +16,17 @@
           <template v-slot:[`item.num`]="{ index }">
                 <span>{{index+ 1}}</span>
           </template>
-          <template v-slot:[`item.edit3`]="{ item }">
+          <template v-slot:[`item.activeFlag`]="{ item }">
+            <a-tag color="green" v-if="item.activeFlag === 1">อนุมัติ</a-tag>
+              <a-tag color="red" v-else-if="item.activeFlag === 0">ปิดการใช้งาน</a-tag>
+              <a-tag color="red" v-else>รออนุมัติ</a-tag>
+          </template>
+          <template v-slot:[`item.edit`]="{ item }">
+                <v-row no-gutters justify="center">
+                  <v-switch v-model="item.check" dense   @change="ChangeStatus(item)"></v-switch>
+                </v-row>
+          </template>
+          <template v-slot:[`item.detail`]="{ item }">
                 <a-button @click="detail(item)">รายละเอียด</a-button>
           </template>
           </v-data-table>
@@ -42,6 +52,7 @@ export default {
   data () {
     return {
       PropModal: '',
+      DataTable: [],
       pageCount: 5,
       page: 1,
       itemsPerPage: 5,
@@ -49,25 +60,48 @@ export default {
       headers: [
         { text: 'ลำดับ', sortable: false, value: 'num', align: 'center' },
         { text: 'ชื่อ', sortable: false, value: 'name', align: 'center' },
-        { text: 'สถานที่ปฏิบัติงาน', sortable: false, value: 'adminCompanyName', align: 'center' },
+        { text: 'Job', sortable: false, value: 'job', align: 'center' },
         { text: 'หมายเลขโทรศัพท์', sortable: false, value: 'tel', align: 'center' },
-        { text: 'เขต', sortable: false, value: 'adminDistrict', align: 'center' },
-        { text: 'รายละเอียด', sortable: false, value: 'edit3', align: 'center' }
+        { text: 'สถานะ', sortable: false, value: 'activeFlag', align: 'center' },
+        { text: 'กำหนดสิทธิ์', sortable: false, value: 'edit', align: 'center' },
+        { text: 'รายละเอียด', sortable: false, value: 'detail', align: 'center' }
       ]
     }
   },
   created () {
-    console.log('this.props', this.props)
+    this.SetDataTable(this.props)
   },
   watch: {
     props (val) {
-      console.log('object', val)
+      this.SetDataTable(val)
     }
   },
   methods: {
     async detail (val) {
       this.PropModal = val
       await this.$store.commit('SetModal')
+    },
+    SetDataTable (val) {
+      var data = [...val]
+      data.forEach(item => {
+        if (item.activeFlag === 1) {
+          item.check = true
+        } else {
+          item.check = false
+        }
+      })
+      this.DataTable = data
+    },
+    async ChangeStatus (val) {
+      if (val.check === false) {
+        val.activeFlag = 0
+      } else {
+        val.activeFlag = 1
+      }
+      await this.$store.dispatch('EditUser', val)
+      await this.$store.dispatch('GetUserService')
+      var data = await this.$store.state.ModuleApi.DataUserService.data
+      this.SetDataTable(data)
     }
   }
 }

@@ -43,9 +43,9 @@ export default {
     var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
     this.Username = user.name
     this.Email = user.email
-    this.Location = user.area
-    this.Area = user.adminResponsibilityArea
-    await this.$store.dispatch('GetReport')
+    this.Location = user.adminCompanyName
+    this.Area = user.adminProvince
+    await this.$store.dispatch('GetReport', user.adminProvince)
     var data = this.$store.state.ModuleApi.DataReport
     this.DataTable = data.data
     this.StatusApi = false

@@ -50,7 +50,7 @@ export default {
         { text: 'ลำดับ', sortable: false, value: 'num', align: 'center' },
         { text: 'หมายเลขการเเจ้งเหตุ', sortable: false, value: 'requestNumber', align: 'center' },
         { text: 'ประเภท', sortable: false, value: 'typeName', align: 'center' },
-        { text: 'พิกัด', sortable: false, value: 'lat', align: 'center' },
+        { text: 'ตำเเหน่ง', sortable: false, value: 'lat', align: 'center' },
         { text: 'สถานะ', sortable: false, value: 'status', align: 'center' },
         { text: 'รายละเอียด', sortable: false, value: 'edit3', align: 'center' }
       ]
