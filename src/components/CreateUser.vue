@@ -1,5 +1,6 @@
 <template>
   <div>
+    <v-form ref="FormCreate" :lazy-validation="lazy">
     <a-row type="flex" justify="center">
       <a-col :xs="24" :md="20">
         <a-card>
@@ -8,82 +9,90 @@
       </a-col>
       <a-col :xs="24" :md="20">
         <a-card>
-          <a-row type="flex" class="mb-5">
-            <a-col :md="4" :xs="8">
+          <a-row type="flex">
+            <a-col :md="4" :xs="8" class="mt-2">
               <span>อีเมล์ : </span>
             </a-col>
             <a-col  :md='14' :xs="16">
-              <a-input v-model="email" placeholder="" />
+              <v-text-field outlined dense v-model="email" placeholder="อีเมล์" :rules="Rules.email"></v-text-field>
             </a-col>
           </a-row>
-          <a-row type="flex" class="mb-5" v-if="Header === 'สร้างผู้ใช้งาน'">
-            <a-col :md="4" :xs="8">
+          <a-row type="flex" v-if="Header === 'สร้างผู้ใช้งาน'" >
+            <a-col :md="4" :xs="8" class="mt-2">
               <span>รหัสผ่าน : </span>
             </a-col>
             <a-col  :md='14' :xs="16">
-              <a-input v-model="password" placeholder="" />
+              <v-text-field outlined dense
+              @click:append="show = !show"
+              :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="show ? 'text' : 'password'"
+              v-model="password"
+              placeholder="รหัสผ่าน"
+              :rules="Rules.password"></v-text-field>
             </a-col>
           </a-row>
-          <a-row type="flex" class="mb-5">
-            <a-col :md="4" :xs="8">
+          <a-row type="flex">
+            <a-col :md="4" :xs="8" class="mt-2">
               <span>ชื่อผู้ใช้งาน : </span>
             </a-col>
             <a-col  :md='14' :xs="16">
-              <a-input v-model="name" placeholder="" />
+              <v-text-field outlined dense v-model="name" placeholder="ชื่อผู้ใช้งาน" :rules="Rules.name"></v-text-field>
             </a-col>
           </a-row>
-          <a-row type="flex" class="mb-5">
-            <a-col :md="4" :xs="8">
+          <a-row type="flex">
+            <a-col :md="4" :xs="8" class="mt-2">
               <span>โทรศัพท์ : </span>
             </a-col>
             <a-col :md='14' :xs="16">
-              <a-input v-model="tel" placeholder="" />
+              <v-text-field outlined dense v-model="tel" placeholder="เบอร์โทรศัพท์" :rules="Rules.tel"></v-text-field>
             </a-col>
           </a-row>
-          <a-row type="flex" class="mb-5">
-            <a-col :md="4" :xs="8">
+          <a-row type="flex">
+            <a-col :md="4" :xs="8" class="mt-2">
               <span>สถานที่ปฏิบัติงาน : </span>
             </a-col>
             <a-col :md='14' :xs="16">
-              <a-input v-model="location" placeholder="" />
+              <v-text-field outlined dense v-model="location" placeholder="สถานที่ปฏิบัติงาน" :rules="Rules.location"></v-text-field>
             </a-col>
           </a-row>
-          <a-row type="flex" class="mb-5">
-            <a-col :md="4" :xs="8">
+          <a-row type="flex">
+            <a-col :md="4" :xs="8" class="mt-2">
               <span>รับผิดชอบตาม : </span>
             </a-col>
             <a-col :md='14' :xs="16">
-              <a-select :default-value="SelectArea" style="width: 100%" @change="handleChange">
-                <a-select-option v-for="item in Listarea" :key="item.key" :value="item.key">
-                  {{item.name}}
-                </a-select-option>
-              </a-select>
+              <v-autocomplete outlined dense :items="Listarea" v-model="SelectArea" item-text="name" item-value="name" placeholder="พื้นที่รับผิดชอบตาม" :rules="Rules.location"></v-autocomplete>
             </a-col>
           </a-row>
           <a-row type="flex" class="mb-5">
-            <a-col :md="4" :xs="8">
+            <a-col :md="4" :xs="8" class="mt-2">
               <span>เขตพื้นที่รับผิดชอบ : </span>
             </a-col>
             <a-col :md='14' :xs="16">
               <a-row type="flex" :gutter="[16,0]">
-                <a-col :span='12'><addressinput-subdistrict label="" placeholder="ตำบล/เเขวง"  v-model="subdistrict" /></a-col>
-                <a-col :span='12'><addressinput-district label="" placeholder="อำเภอ/เขต"  v-model="district" /></a-col>
-                <a-col :span='12' class="mt-5"><addressinput-province label="" placeholder="จังหวัด"  v-model="province" /></a-col>
+                <a-col :span='24'><addressinput-subdistrict label="" placeholder="ตำบล/เเขวง"  v-model="subdistrict" /></a-col>
+                <a-col :span='24' class="mt-5"><addressinput-district label="" placeholder="อำเภอ/เขต"  v-model="district" /></a-col>
+                <a-col :span='24' class="mt-5"><addressinput-province label="" placeholder="จังหวัด"  v-model="province" /></a-col>
               </a-row>
             </a-col>
           </a-row>
           <a-row type="flex" class="mb-5">
-            <a-col :md="4" :xs="8">
+            <a-col :md="4" :xs="8" >
               <span>โลโก้หน่วยงาน : </span>
             </a-col>
-            <a-col :md='4' :xs="16">
-                <a-card>
-                  <a-row type="flex" justify="center">
-                    <v-avatar size="120">
-                    <img src="@/assets/addimg.jpg" />
-                    </v-avatar>
-                  </a-row>
-              </a-card>
+            <a-col :md='4' :xs="16" @click="onPickFile()">
+              <a-row type="flex" justify="center" align="middle">
+                <v-file-input
+                  v-model="DataImage"
+                  @change="UploadImage()"
+                  id="file_input"
+                  style="display:none"></v-file-input>
+                  <a-card class="ml-15" v-if="Imageurl === ''">
+                    <v-img max-width="150" src='@/assets/addimg.jpg'></v-img>
+                  </a-card>
+                  <a-card class="ml-15" v-else>
+                    <v-img max-width="150" :src="Imageurl"></v-img>
+                  </a-card>
+              </a-row>
             </a-col>
           </a-row>
           <!-- <a-row type="flex" class="mb-5">
@@ -103,15 +112,17 @@
           </a-row> -->
           <a-row type="flex" class="mb-5">
             <a-col :md="18" :xs="24">
-              <a-row type="flex" justify="space-between">
-                <a-button type="danger">ยกเลิก</a-button>
-                <a-button type="primary" @click="Check">ยืนยัน</a-button>
+              <a-row type="flex" justify="end">
+                <!-- <a-button type="danger">ยกเลิก</a-button> -->
+                <a-button type="primary" v-if="clickConfirm===true" disabled>ยืนยัน</a-button>
+                <a-button type="primary" @click="Check" v-else>ยืนยัน</a-button>
               </a-row>
             </a-col>
           </a-row>
         </a-card>
       </a-col>
     </a-row>
+    </v-form>
   </div>
 </template>
 <script>
@@ -120,6 +131,12 @@ export default {
   props: ['Header'],
   data () {
     return {
+      show: false,
+      lazy: false,
+      DataImage: [],
+      ImageBase64: '',
+      clickConfirm: false,
+      Imageurl: '',
       SelectArea: '',
       Listarea: [
         { name: 'เเขวง', key: '1' },
@@ -136,7 +153,24 @@ export default {
       district: '',
       province: '',
       location: '',
-      StateCreate: this.$router.currentRoute.query.State
+      StateCreate: this.$router.currentRoute.query.State,
+      Rules: {
+        name: [(v) => !!v || 'กรุณาระบุชื่อผู้ใช้งาน'],
+        location: [(v) => !!v || 'กรุณาระบุสถานที่ปฏิบัติงาน'],
+        email: [
+          (v) => !!v || 'กรุณากรอกข้อมูล',
+          (v) => /.+@.+\..+/.test(v) || 'รูปแบบของ email ไม่ถูกต้อง'
+        ],
+        password: [
+          (v) => !!v || 'กรุณากรอกข้อมูล',
+          (v) => (v.length >= 8) || 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร'
+        ],
+        tel: [
+          (v) => !!v || 'กรุณากรอกข้อมูล',
+          (v) => /^([0-9])+$/.test(v) || 'กรุณาระบุตัวเลข',
+          (v) => (v.length >= 9) || 'รหัสผ่านต้องมีอย่างน้อย 9 ตัวอักษร'
+        ]
+      }
     }
   },
   created () {
@@ -161,6 +195,9 @@ export default {
       this.subdistrict = user.adminSubDistrict
       this.district = user.adminDistrict
       this.province = user.adminProvince
+      if (user.logoImg !== '' || user.logoImg !== null) {
+        this.Imageurl = user.logoImg
+      }
       // this.area = user.area
       this.tel = user.tel
     } else {
@@ -172,17 +209,33 @@ export default {
     }
   },
   methods: {
-    handleChange (value) {
-      this.SelectArea = value
+    onPickFile () {
+      document.getElementById('file_input').click()
+    },
+    UploadImage () {
+      const element = this.DataImage
+      const reader = new FileReader()
+      reader.readAsDataURL(element)
+      reader.onload = () => {
+        var resultReader = reader.result
+        var url = URL.createObjectURL(element)
+        this.ImageBase64 = resultReader
+        this.Imageurl = url
+      }
     },
     Check () {
-      if (this.Header === 'สร้างผู้ใช้งาน') {
-        this.CreateUser()
-      } else {
-        this.EditUser()
+      if (this.$refs.FormCreate.validate(true)) {
+        if (this.Header === 'สร้างผู้ใช้งาน') {
+          this.clickConfirm = true
+          this.CreateUser()
+        } else {
+          this.clickConfirm = true
+          this.EditUser()
+        }
       }
     },
     async CreateUser () {
+      console.log('fileList', this.fileList)
       var adminAreaType = ''
       var CheckArea = ''
       if (this.SelectArea === '1') {
@@ -202,7 +255,7 @@ export default {
         tel: this.tel,
         adminAreaType: adminAreaType,
         adminResponsibilityArea: CheckArea,
-        logoImg: '',
+        logoImg: this.ImageBase64,
         userType: this.StateCreate,
         adminProvince: this.province,
         adminDistrict: this.district,
@@ -251,12 +304,24 @@ export default {
         adminAreaType = 'PROVINCE'
         CheckArea = this.province
       }
+      if (user.userType === 'ADMIN') {
+        user.adminProvince = this.province
+        user.adminDistrict = this.district
+        user.adminSubDistrict = this.subdistrict
+      } else {
+        user.serviceProvince = this.province
+        user.serviceDistrict = this.district
+        user.serviceSubDistrict = this.subdistrict
+      }
       user.adminAreaType = adminAreaType
       user.adminResponsibilityArea = CheckArea
       user.email = this.email
       user.name = this.name
       user.tel = this.tel
-      console.log('ก่อนยิง api edit', user)
+      user.adminCompanyName = this.location
+      if (this.ImageBase64 !== '') {
+        user.logoImg = this.ImageBase64
+      }
       await this.$store.dispatch('EditUser', user)
       var res = this.$store.state.ModuleApi.EditUser
       console.log('res หลังยิง', res)

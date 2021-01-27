@@ -13,9 +13,6 @@
             :search="search"
             hide-default-footer
           >
-          <template v-slot:[`item.num`]="{ index }">
-                <span>{{index+ 1}}</span>
-          </template>
           <template v-slot:[`item.activeFlag`]="{ item }">
             <a-tag color="green" v-if="item.activeFlag === 1">อนุมัติ</a-tag>
               <a-tag color="red" v-else-if="item.activeFlag === 0">ปิดการใช้งาน</a-tag>
@@ -53,7 +50,7 @@ export default {
     return {
       PropModal: '',
       DataTable: [],
-      pageCount: 5,
+      pageCount: 10,
       page: 1,
       itemsPerPage: 5,
       search: '',
@@ -83,7 +80,8 @@ export default {
     },
     SetDataTable (val) {
       var data = [...val]
-      data.forEach(item => {
+      data.forEach((item, index) => {
+        item.num = index + 1
         if (item.activeFlag === 1) {
           item.check = true
         } else {

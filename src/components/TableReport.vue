@@ -13,9 +13,6 @@
             :search="search"
             hide-default-footer
           >
-          <template v-slot:[`item.num`]="{ index }">
-                <span>{{index}}</span>
-          </template>
           <template v-slot:[`item.edit3`]="{ item }">
                 <a-button @click="detail(item)">รายละเอียด</a-button>
           </template>
@@ -42,9 +39,9 @@ export default {
   data () {
     return {
       PropModal: '',
-      pageCount: 5,
+      pageCount: 10,
       page: 1,
-      itemsPerPage: 5,
+      itemsPerPage: 10,
       search: '',
       headers: [
         { text: 'ลำดับ', sortable: false, value: 'num', align: 'center' },
