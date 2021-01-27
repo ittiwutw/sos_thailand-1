@@ -11,8 +11,8 @@
                 <span>{{props.name}}</span>
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
-                <span>ลักษณะงาน :</span>
-                <span>{{props.job}}</span>
+                <span>สถานที่ปฏิบัติงาน :</span>
+                <span>{{props.adminCompanyName}}</span>
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
                 <span>หมายเลขโทรศัพท์ :</span>
@@ -20,7 +20,7 @@
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
                 <span>เขตรับผิดชอบ :</span>
-                <span>{{props.serviceDistrict}}</span>
+                <span>{{props.adminDistrict}}</span>
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
                 <span>อีเมล์ :</span>
@@ -28,7 +28,10 @@
               </a-row>
             </a-col>
             <a-col :span='12'>
-              <a-card class="mt-2">
+              <a-card class="mt-2" v-if="props.logoImg !== null || props.logoImg !== ''">
+                <img width="100%" :src="props.logoImg" />
+              </a-card>
+              <a-card class="mt-2" v-else>
                 <img width="100%" src="@/assets/logo_sos.png" />
               </a-card>
             </a-col>

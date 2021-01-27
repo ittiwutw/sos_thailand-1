@@ -45,7 +45,18 @@ export default {
     this.Email = user.email
     this.Location = user.adminCompanyName
     this.Area = user.adminProvince
-    await this.$store.dispatch('GetReport', user.adminProvince)
+    var send = {}
+    if (user.adminAreaType === 'PROVINCE') {
+      send.type = 'Province'
+      send.area = user.adminProvince
+    } else if (user.adminAreaType === 'SUBDISTRICT') {
+      send.type = 'Subdistrict'
+      send.area = user.adminSubDistrict
+    } else if (user.adminAreaType === 'DISTRICT') {
+      send.type = 'District'
+      send.area = user.adminDistrict
+    }
+    await this.$store.dispatch('GetReport', send)
     var data = this.$store.state.ModuleApi.DataReport
     this.DataTable = data.data
     this.StatusApi = false

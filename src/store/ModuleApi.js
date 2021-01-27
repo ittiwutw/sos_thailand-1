@@ -59,14 +59,14 @@ const ModuleApi = {
     },
     async GetReport (context, val) {
       var data = {
-        where: `WHERE req.status = 'WAITING' AND req.requestProvince LIKE '%${val}%'`
+        where: `WHERE req.status = 'WAITING' AND req.request${val.type} LIKE '%${val.area}%'`
       }
       var res = await axios.post(`${process.env.VUE_APP_API}getAllSOSRequest`, data)
       context.commit('SetDataReport', res.data)
     },
     async GetHistory (context, val) {
       var data = {
-        where: `WHERE req.status = 'FINISHED' AND req.requestProvince LIKE '%${val}%'`
+        where: `WHERE req.status = 'FINISHED' AND req.request${val.type} LIKE '%${val.area}%'`
       }
       var res = await axios.post(`${process.env.VUE_APP_API}getAllSOSRequest`, data)
       context.commit('SetDataHistory', res.data)
