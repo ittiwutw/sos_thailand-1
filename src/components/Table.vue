@@ -54,11 +54,11 @@ export default {
     }
   },
   created () {
-    console.log('this.props', this.props)
+    // console.log('this.props', this.props)
   },
   watch: {
     props (val) {
-      console.log('object', val)
+      // console.log('object', val)
     }
   },
   methods: {

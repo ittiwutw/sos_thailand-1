@@ -206,7 +206,7 @@ export default {
     this.$EventBus.$emit('StatusHeader', this.Header)
     var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
     this.userType = user.userType
-    console.log('User Tbnoung', user)
+    // console.log('User Tbnoung', user)
     if (this.Header === 'เเก้ไขผู้ใช้งาน') {
       if (user.adminAreaType === 'SUBDISTRICT') {
         this.SelectArea = 'เเขวง'
@@ -295,7 +295,7 @@ export default {
     },
     async CreateOfficer () {
       var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
-      console.log('User Create Officer', user)
+      // console.log('User Create Officer', user)
       var data = {
         email: this.email,
         password: this.password,
@@ -309,7 +309,7 @@ export default {
         adminSubDistrict: user.adminSubDistrict,
         adminCompanyName: user.adminCompanyName
       }
-      console.log('data==== edit Office', data)
+      // console.log('data==== edit Office', data)
       await this.$store.dispatch('CreateUser', data)
       var res = this.$store.state.ModuleApi.CreateUser
       if (res.response_code === 'SUCCESS') {
@@ -365,7 +365,7 @@ export default {
       }
       await this.$store.dispatch('CreateUser', data)
       var res = this.$store.state.ModuleApi.CreateUser
-      console.log('ข้อมูลหลังสร้าง user', res)
+      // console.log('ข้อมูลหลังสร้าง user', res)
       if (res.response_code === 'SUCCESS') {
         this.$swal({
           icon: 'success',
@@ -424,7 +424,7 @@ export default {
       }
       await this.$store.dispatch('EditUser', user)
       var res = this.$store.state.ModuleApi.EditUser
-      console.log('res หลังยิง', res)
+      // console.log('res หลังยิง', res)
       if (res.response_code === '0000') {
         this.$swal({
           icon: 'success',

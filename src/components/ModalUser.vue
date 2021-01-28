@@ -60,7 +60,7 @@ export default {
   },
   watch: {
     props (val) {
-      console.log('prop user', val)
+      // console.log('prop user', val)
     }
   },
   methods: {

@@ -16,6 +16,9 @@
           <template v-slot:[`item.edit3`]="{ item }">
                 <a-button @click="detail(item)">รายละเอียด</a-button>
           </template>
+          <template v-slot:[`item.lat`]="{ item }">
+                <a-button @click="GoogleMap(item)">เปิด Map</a-button>
+          </template>
           </v-data-table>
         </v-card>
         <div class="text-center pt-2 pb-3">
@@ -54,13 +57,17 @@ export default {
     }
   },
   created () {
-    console.log('---->', this.props)
+    // console.log('---->', this.props)
   },
   methods: {
     async detail (val) {
       this.PropModal = val
-      console.log('PropModal', this.PropModal)
+      // console.log('PropModal', this.PropModal)
       await this.$store.commit('SetModal')
+    },
+    GoogleMap (val) {
+      var url = `http://google.com/maps/place/${val.lat},${val.lng}`
+      window.open(url, '_blank')
     }
   }
 }

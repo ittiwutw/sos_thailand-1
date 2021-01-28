@@ -72,7 +72,7 @@ export default {
     }
   },
   created () {
-    console.log('เข้า create home page')
+    // console.log('เข้า create home page')
     this.$EventBus.$on('StatusHeader', (val) => {
       this.CheckHeader(val)
     })
@@ -96,8 +96,8 @@ export default {
   },
   methods: {
     async ChangePage (val) {
-      console.log('เข้า ChangePage', val)
-      console.log(val, this.$router.currentRoute)
+      // console.log('เข้า ChangePage', val)
+      // console.log(val, this.$router.currentRoute)
       if (val.name !== this.$router.currentRoute.name) {
         this.$router.push({ path: val.path })
       }
