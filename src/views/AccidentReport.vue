@@ -40,6 +40,7 @@ export default {
     }
   },
   async created () {
+    this.$EventBus.$emit('StatusHeader', 'รายงานการเเจ้งเหตุ')
     var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
     this.Username = user.name
     this.Email = user.email

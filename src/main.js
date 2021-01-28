@@ -17,7 +17,7 @@ Vue.use(VueSweetalert2)
 Vue.use(SequentialEntrance)
 Vue.use(Antd)
 Vue.config.productionTip = false
-
+Vue.prototype.$EventBus = new Vue()
 new Vue({
   router,
   store,

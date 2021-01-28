@@ -28,6 +28,7 @@ export default {
     }
   },
   async created () {
+    this.$EventBus.$emit('StatusHeader', 'จัดการแอดมิน')
     await this.$store.dispatch('GetUserAdmin')
     var data = this.$store.state.ModuleApi.DataUserAdmin
     data.data.forEach((element, index) => {

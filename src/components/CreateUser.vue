@@ -55,12 +55,28 @@
               <v-text-field outlined dense v-model="location" placeholder="สถานที่ปฏิบัติงาน" :rules="Rules.location"></v-text-field>
             </a-col>
           </a-row>
+          <a-row type="flex" v-else>
+            <a-col :md="4" :xs="8" class="mt-2">
+              <span>สถานที่ปฏิบัติงาน : </span>
+            </a-col>
+            <a-col :md='14' :xs="16">
+              <v-text-field outlined dense v-model="location" placeholder="สถานที่ปฏิบัติงาน" :rules="Rules.location" disabled></v-text-field>
+            </a-col>
+          </a-row>
           <a-row type="flex" v-if="userType === 'SUPERADMIN'">
             <a-col :md="4" :xs="8" class="mt-2">
               <span>รับผิดชอบตาม : </span>
             </a-col>
             <a-col :md='14' :xs="16">
               <v-autocomplete outlined dense :items="Listarea" v-model="SelectArea" item-text="name" item-value="name" placeholder="พื้นที่รับผิดชอบตาม" :rules="Rules.location"></v-autocomplete>
+            </a-col>
+          </a-row>
+          <a-row type="flex" v-else>
+            <a-col :md="4" :xs="8" class="mt-2">
+              <span>รับผิดชอบตาม : </span>
+            </a-col>
+            <a-col :md='14' :xs="16">
+              <v-autocomplete outlined dense :items="Listarea" v-model="SelectArea" item-text="name" item-value="name" placeholder="พื้นที่รับผิดชอบตาม" disabled :rules="Rules.location"></v-autocomplete>
             </a-col>
           </a-row>
           <a-row type="flex" class="mb-5" v-if="userType === 'SUPERADMIN'">
@@ -72,6 +88,18 @@
                 <a-col :span='24'><addressinput-subdistrict label="" placeholder="ตำบล/เเขวง"  v-model="subdistrict" /></a-col>
                 <a-col :span='24' class="mt-5"><addressinput-district label="" placeholder="อำเภอ/เขต"  v-model="district" /></a-col>
                 <a-col :span='24' class="mt-5"><addressinput-province label="" placeholder="จังหวัด"  v-model="province" /></a-col>
+              </a-row>
+            </a-col>
+          </a-row>
+          <a-row type="flex" class="mb-5" v-else>
+            <a-col :md="4" :xs="8" class="mt-2">
+              <span>เขตพื้นที่รับผิดชอบ : </span>
+            </a-col>
+            <a-col :md='14' :xs="16">
+              <a-row type="flex" :gutter="[16,0]">
+                <a-col :span='24'><addressinput-subdistrict label="" placeholder="ตำบล/เเขวง"  v-model="subdistrict" disabled /></a-col>
+                <a-col :span='24' class="mt-5"><addressinput-district label="" placeholder="อำเภอ/เขต"  v-model="district" disabled /></a-col>
+                <a-col :span='24' class="mt-5"><addressinput-province label="" placeholder="จังหวัด"  v-model="province" disabled /></a-col>
               </a-row>
             </a-col>
           </a-row>
@@ -175,8 +203,10 @@ export default {
     }
   },
   created () {
+    this.$EventBus.$emit('StatusHeader', this.Header)
     var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
-    console.log('User', user)
+    this.userType = user.userType
+    console.log('User Tbnoung', user)
     if (this.Header === 'เเก้ไขผู้ใช้งาน') {
       if (user.adminAreaType === 'SUBDISTRICT') {
         this.SelectArea = 'เเขวง'

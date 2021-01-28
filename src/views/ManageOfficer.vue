@@ -29,6 +29,7 @@ export default {
     }
   },
   async created () {
+    this.$EventBus.$emit('StatusHeader', 'จัดการเจ้าหน้าที่')
     var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
     console.log('Manage Office =', user)
     await this.$store.dispatch('GetUserOfficer', user.adminCompanyName)

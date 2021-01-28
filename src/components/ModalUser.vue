@@ -19,12 +19,16 @@
                 <span>{{props.tel}}</span>
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
-                <span>เขตรับผิดชอบ :</span>
+                <span>เขต :</span>
                 <span>{{props.adminDistrict}}</span>
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
                 <span>อีเมล์ :</span>
                 <span>{{props.email}}</span>
+              </a-row>
+              <a-row type="flex" class="ma-5" justify="space-between">
+                <span>รหัสผ่าน :</span>
+                <span>{{props.password}}</span>
               </a-row>
             </a-col>
             <a-col :span='12'>

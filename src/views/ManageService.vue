@@ -28,6 +28,7 @@ export default {
     }
   },
   async created () {
+    this.$EventBus.$emit('StatusHeader', 'จัดการผู้ให้บริการ')
     await this.$store.dispatch('GetUserService')
     var data = this.$store.state.ModuleApi.DataUserService
     data.data.forEach((element, index) => {

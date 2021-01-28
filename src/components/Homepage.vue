@@ -72,6 +72,10 @@ export default {
     }
   },
   created () {
+    console.log('เข้า create home page')
+    this.$EventBus.$on('StatusHeader', (val) => {
+      this.CheckHeader(val)
+    })
     var checkuser = JSON.parse(Decode.decode(localStorage.getItem('user')))
     this.username = checkuser.name
     if (checkuser.logoImg === '' || checkuser.logoImg === null) {
@@ -83,6 +87,7 @@ export default {
       this.Navigator = this.NavigatorAdmin
     } else if (checkuser.userType === 'SUPERADMIN') {
       this.Navigator = this.NavigatorSuperAdmin
+      this.Header = 'จัดการผู้ให้บริการ'
       this.$router.push({ path: '/ManageService' })
     } else {
       this.Navigator = this.NavigatorDefault
@@ -90,29 +95,15 @@ export default {
     this.CheckHeader()
   },
   methods: {
-    ChangePage (val) {
+    async ChangePage (val) {
+      console.log('เข้า ChangePage', val)
       console.log(val, this.$router.currentRoute)
       if (val.name !== this.$router.currentRoute.name) {
         this.$router.push({ path: val.path })
-        this.CheckHeader()
       }
     },
-    CheckHeader () {
-      if (this.$router.currentRoute.name === 'ManageOfficer') {
-        this.Header = 'จัดการเจ้าหน้าที่'
-      } else if (this.$router.currentRoute.name === 'ManageService') {
-        this.Header = 'จัดการผู้ให้บริการ'
-      } else if (this.$router.currentRoute.name === 'Report') {
-        this.Header = 'รายงานการเเจ้งเหตุ'
-      } else if (this.$router.currentRoute.name === 'History') {
-        this.Header = 'ประวัติการเเจ้งเหตุ'
-      } else if (this.$router.currentRoute.name === 'EditUser') {
-        this.Header = 'เเก้ไขข้อมูล'
-      } else if (this.$router.currentRoute.name === 'CreateUser') {
-        this.Header = 'สร้างผู้ใช้งาน'
-      } else if (this.$router.currentRoute.name === 'ManageAdmin') {
-        this.Header = 'จัดการแอดมิน'
-      }
+    CheckHeader (val) {
+      this.Header = val
     },
     Logout () {
       localStorage.removeItem('user')
