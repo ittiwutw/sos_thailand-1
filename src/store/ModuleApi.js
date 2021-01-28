@@ -68,7 +68,7 @@ const ModuleApi = {
     },
     async GetHistory (context, val) {
       var data = {
-        where: `WHERE (req.status = 'FINISHED' OR req.status = 'CANCELLED') AND req.request${val.type} LIKE '%${val.area}%'`
+        where: `WHERE (req.status = 'FINISHED' OR req.status = 'CANCEL') AND req.request${val.type} LIKE '%${val.area}%'`
       }
       var res = await axios.post(`${process.env.VUE_APP_API}getAllSOSRequest`, data)
       context.commit('SetDataHistory', res.data)
