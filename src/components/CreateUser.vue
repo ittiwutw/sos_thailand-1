@@ -243,6 +243,16 @@ export default {
         this.subdistrict = user.adminSubDistrict
         this.district = user.adminDistrict
         this.province = user.adminProvince
+        if (user.adminAreaType === 'SUBDISTRICT') {
+          this.SelectArea = 'เเขวง'
+          this.subdistrict = user.adminResponsibilityArea
+        } else if (user.adminAreaType === 'DISTRICT') {
+          this.SelectArea = 'เขต'
+          this.district = user.adminResponsibilityArea
+        } else {
+          this.SelectArea = 'จังหวัด'
+          this.province = user.adminResponsibilityArea
+        }
       }
       this.userType = user.userType
       this.email = ''
