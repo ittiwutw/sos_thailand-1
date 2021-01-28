@@ -28,6 +28,7 @@ export default {
       DataTable: []
     }
   },
+
   async created () {
     this.$EventBus.$emit('StatusHeader', 'จัดการเจ้าหน้าที่')
     var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
