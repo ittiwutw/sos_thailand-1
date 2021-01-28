@@ -90,15 +90,15 @@ export default {
         this.Img = JSON.parse(val.sosImgs)[0]
       }
       this.Username = val.userReqName
-      // this.UserEmail = val.userProfile[0].email
-      // this.UserPhone = val.userProfile[0].tel
+      this.UserEmail = val.userReqEmail
+      this.UserPhone = val.userReqTel
+      this.OfficerEmail = val.officerEmail
       // if (val.officerProfile.length !== 0) {
       this.Officername = val.officerName
-      // this.OfficerEmail = val.officerProfile[0].email
       this.Officerphone = val.officerTel
       // }
       this.discription = val.description
-      this.Type = val.typeName
+      this.Type = val.requestNumber
       this.Status = val.status
     }
   },
