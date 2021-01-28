@@ -47,7 +47,7 @@
               <v-text-field outlined dense v-model="tel" placeholder="เบอร์โทรศัพท์" :rules="Rules.tel"></v-text-field>
             </a-col>
           </a-row>
-          <a-row type="flex">
+          <a-row type="flex" v-if="userType === 'SUPERADMIN'">
             <a-col :md="4" :xs="8" class="mt-2">
               <span>สถานที่ปฏิบัติงาน : </span>
             </a-col>
@@ -55,7 +55,7 @@
               <v-text-field outlined dense v-model="location" placeholder="สถานที่ปฏิบัติงาน" :rules="Rules.location"></v-text-field>
             </a-col>
           </a-row>
-          <a-row type="flex">
+          <a-row type="flex" v-if="userType === 'SUPERADMIN'">
             <a-col :md="4" :xs="8" class="mt-2">
               <span>รับผิดชอบตาม : </span>
             </a-col>
@@ -63,7 +63,7 @@
               <v-autocomplete outlined dense :items="Listarea" v-model="SelectArea" item-text="name" item-value="name" placeholder="พื้นที่รับผิดชอบตาม" :rules="Rules.location"></v-autocomplete>
             </a-col>
           </a-row>
-          <a-row type="flex" class="mb-5">
+          <a-row type="flex" class="mb-5" v-if="userType === 'SUPERADMIN'">
             <a-col :md="4" :xs="8" class="mt-2">
               <span>เขตพื้นที่รับผิดชอบ : </span>
             </a-col>
@@ -131,6 +131,7 @@ export default {
   props: ['Header'],
   data () {
     return {
+      userType: 'SUPERADMIN',
       show: false,
       lazy: false,
       DataImage: [],
@@ -174,8 +175,9 @@ export default {
     }
   },
   created () {
+    var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
+    console.log('User', user)
     if (this.Header === 'เเก้ไขผู้ใช้งาน') {
-      var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
       if (user.adminAreaType === 'SUBDISTRICT') {
         this.SelectArea = 'เเขวง'
         this.subdistrict = user.adminResponsibilityArea
@@ -186,7 +188,6 @@ export default {
         this.SelectArea = 'จังหวัด'
         this.province = user.adminResponsibilityArea
       }
-      console.log('User', user)
       this.email = user.email
       this.name = user.name
       this.password = user.password
@@ -201,6 +202,7 @@ export default {
       // this.area = user.area
       this.tel = user.tel
     } else {
+      this.userType = user.userType
       this.email = ''
       this.password = ''
       this.job = ''
@@ -224,18 +226,65 @@ export default {
       }
     },
     Check () {
+      var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
       if (this.$refs.FormCreate.validate(true)) {
         if (this.Header === 'สร้างผู้ใช้งาน') {
           this.clickConfirm = true
-          this.CreateUser()
+          if (user.userType === 'SUPERADMIN') {
+            this.CreateUser()
+          } else {
+            this.CreateOfficer()
+          }
         } else {
           this.clickConfirm = true
           this.EditUser()
         }
       }
     },
+    async CreateOfficer () {
+      var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
+      console.log('User Create Officer', user)
+      var data = {
+        email: this.email,
+        password: this.password,
+        name: this.name,
+        tel: this.tel,
+        serviceTypeName: user.adminAreaType,
+        logoImg: this.ImageBase64,
+        userType: this.StateCreate,
+        adminProvince: user.adminProvince,
+        adminDistrict: user.adminDistrict,
+        adminSubDistrict: user.adminSubDistrict,
+        adminCompanyName: user.adminCompanyName
+      }
+      console.log('data==== edit Office', data)
+      await this.$store.dispatch('CreateUser', data)
+      var res = this.$store.state.ModuleApi.CreateUser
+      if (res.response_code === 'SUCCESS') {
+        this.$swal({
+          icon: 'success',
+          text: res.response_description,
+          showConfirmButton: false,
+          timer: 2000
+        })
+        this.ResetForm()
+        if (this.StateCreate === 'ADMIN') {
+          this.$router.push({ path: '/ManageAdmin' })
+        } else if (this.StateCreate === 'SERVICE') {
+          this.$router.push({ path: '/ManageService' })
+        } else if (this.StateCreate === 'OFFICER') {
+          this.$router.push({ path: '/' })
+        }
+      } else {
+        this.$swal({
+          icon: 'error',
+          text: res.response_description,
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }
+    },
     async CreateUser () {
-      console.log('fileList', this.fileList)
       var adminAreaType = ''
       var CheckArea = ''
       if (this.SelectArea === '1') {
@@ -262,7 +311,6 @@ export default {
         adminSubDistrict: this.subdistrict,
         adminCompanyName: this.location
       }
-      console.log('data', data)
       await this.$store.dispatch('CreateUser', data)
       var res = this.$store.state.ModuleApi.CreateUser
       console.log('ข้อมูลหลังสร้าง user', res)
@@ -304,7 +352,7 @@ export default {
         adminAreaType = 'PROVINCE'
         CheckArea = this.province
       }
-      if (user.userType === 'ADMIN') {
+      if (user.userType === 'SUPERADMIN') {
         user.adminProvince = this.province
         user.adminDistrict = this.district
         user.adminSubDistrict = this.subdistrict

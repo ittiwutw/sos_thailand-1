@@ -30,7 +30,10 @@ export default {
   async created () {
     await this.$store.dispatch('GetUserService')
     var data = this.$store.state.ModuleApi.DataUserService
-    this.DataTable = data.data
+    data.data.forEach((element, index) => {
+      element.num = index + 1
+      this.DataTable.push(element)
+    })
     this.StatusApi = false
   },
   methods: {

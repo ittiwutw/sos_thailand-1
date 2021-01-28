@@ -45,8 +45,10 @@ const ModuleApi = {
       var res = await axios.post(`${process.env.VUE_APP_API}login`, val)
       context.commit('SetDataLogin', res.data)
     },
-    async GetUserOfficer (context) {
-      var res = await axios.get(`${process.env.VUE_APP_API}/getAllUserByUserType?userType=OFFICER`)
+    async GetUserOfficer (context, val) {
+      console.log('ก่อนยิง api path =', `${process.env.VUE_APP_API}/getAllUserByCompanyName?adminCompanyName=${val}`)
+      var res = await axios.get(`${process.env.VUE_APP_API}/getAllUserByCompanyName?adminCompanyName=${val}`)
+      console.log('adminCompanyName', res)
       context.commit('SetDataUserOfficer', res.data)
     },
     async GetUserAdmin (context) {
@@ -76,6 +78,7 @@ const ModuleApi = {
       await context.commit('SetCreateUser', res.data)
     },
     async EditUser (context, data) {
+      console.log('ก่อนยิง api Edit', data)
       var res = await axios.post(`${process.env.VUE_APP_API}updateUser`, data)
       await context.commit('SetEditUser', res.data)
     }

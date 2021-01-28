@@ -16,6 +16,7 @@
   </div>
 </template>
 <script>
+import { Decode } from '@/services'
 import Table from '@/components/Table'
 export default {
   components: {
@@ -28,9 +29,14 @@ export default {
     }
   },
   async created () {
-    await this.$store.dispatch('GetUserOfficer')
+    var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
+    console.log('Manage Office =', user)
+    await this.$store.dispatch('GetUserOfficer', user.adminCompanyName)
     var data = this.$store.state.ModuleApi.DataUserOfficer
-    this.DataTable = data.data
+    data.data.forEach((element, index) => {
+      element.num = index + 1
+      this.DataTable.push(element)
+    })
     this.StatusApi = false
   },
   methods: {
