@@ -232,6 +232,18 @@ export default {
       // this.area = user.area
       this.tel = user.tel
     } else {
+      if (user.userType === 'ADMIN') {
+        this.userType = user.userType
+        this.email = ''
+        this.password = ''
+        this.job = ''
+        this.area = ''
+        this.tel = ''
+        this.location = user.adminCompanyName
+        this.subdistrict = user.adminSubDistrict
+        this.district = user.adminDistrict
+        this.province = user.adminProvince
+      }
       this.userType = user.userType
       this.email = ''
       this.password = ''
