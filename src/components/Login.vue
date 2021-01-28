@@ -73,7 +73,7 @@ export default {
           showConfirmButton: false,
           timer: 2000
         })
-        this.$router.push({ path: '/' })
+        this.$router.push({ path: '/' }).catch(() => {})
       } else {
         this.$swal({
           icon: 'error',

@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     CreateOfficer () {
-      this.$router.push({ path: '/CreateUser?State=OFFICER' })
+      this.$router.push({ path: '/CreateUser?State=OFFICER' }).catch(() => {})
     }
   }
 }

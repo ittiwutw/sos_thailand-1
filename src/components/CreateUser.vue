@@ -321,11 +321,11 @@ export default {
         })
         this.ResetForm()
         if (this.StateCreate === 'ADMIN') {
-          this.$router.push({ path: '/ManageAdmin' })
+          this.$router.push({ path: '/ManageAdmin' }).catch(() => {})
         } else if (this.StateCreate === 'SERVICE') {
-          this.$router.push({ path: '/ManageService' })
+          this.$router.push({ path: '/ManageService' }).catch(() => {})
         } else if (this.StateCreate === 'OFFICER') {
-          this.$router.push({ path: '/' })
+          this.$router.push({ path: '/' }).catch(() => {})
         }
       } else {
         this.$swal({
@@ -375,11 +375,11 @@ export default {
         })
         this.ResetForm()
         if (this.StateCreate === 'ADMIN') {
-          this.$router.push({ path: '/ManageAdmin' })
+          this.$router.push({ path: '/ManageAdmin' }).catch(() => {})
         } else if (this.StateCreate === 'SERVICE') {
-          this.$router.push({ path: '/ManageService' })
+          this.$router.push({ path: '/ManageService' }).catch(() => {})
         } else if (this.StateCreate === 'OFFICER') {
-          this.$router.push({ path: '/' })
+          this.$router.push({ path: '/' }).catch(() => {})
         }
       } else {
         this.$swal({

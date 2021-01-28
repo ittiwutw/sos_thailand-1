@@ -26,7 +26,7 @@
                 <span>อีเมล์ :</span>
                 <span>{{props.email}}</span>
               </a-row>
-              <a-row type="flex" class="ma-5" justify="space-between">
+              <a-row type="flex" class="ma-5" justify="space-between" v-if="route === ''">
                 <span>รหัสผ่าน :</span>
                 <span>{{props.password}}</span>
               </a-row>
@@ -53,6 +53,11 @@
 <script>
 export default {
   props: ['props'],
+  data () {
+    return {
+      route: ''
+    }
+  },
   computed: {
     Modal () {
       return this.$store.state.ModuleApi.Modal
@@ -61,6 +66,10 @@ export default {
   watch: {
     props (val) {
       // console.log('prop user', val)
+      if (this.$router.currentRoute.name === 'ManageService') {
+        this.route = 'ManageService'
+        this.props.adminDistrict = val.serviceDistrict
+      }
     }
   },
   methods: {

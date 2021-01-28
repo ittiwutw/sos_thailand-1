@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     CreateService () {
-      this.$router.push({ path: '/CreateUser?State=SERVICE' })
+      this.$router.push({ path: '/CreateUser?State=SERVICE' }).catch(() => {})
     }
   }
 }

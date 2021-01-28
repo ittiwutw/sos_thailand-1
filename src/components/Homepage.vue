@@ -25,7 +25,7 @@
             <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <v-toolbar-title>{{Header}}</v-toolbar-title>
             <v-spacer></v-spacer>
-            <a-button @click="Logout">ออกจากระบบ</a-button>
+            <v-btn text @click="Logout">ออกจากระบบ</v-btn>
         </v-app-bar>
         <v-main  class="div_overflow">
           <v-container grid-list-xs>
@@ -88,7 +88,7 @@ export default {
     } else if (checkuser.userType === 'SUPERADMIN') {
       this.Navigator = this.NavigatorSuperAdmin
       this.Header = 'จัดการผู้ให้บริการ'
-      this.$router.push({ path: '/ManageService' })
+      this.$router.push({ path: '/ManageService' }).catch(() => {})
     } else {
       this.Navigator = this.NavigatorDefault
     }
@@ -99,7 +99,7 @@ export default {
       // console.log('เข้า ChangePage', val)
       // console.log(val, this.$router.currentRoute)
       if (val.name !== this.$router.currentRoute.name) {
-        this.$router.push({ path: val.path })
+        this.$router.push({ path: val.path }).catch(() => {})
       }
     },
     CheckHeader (val) {

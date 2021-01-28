@@ -11,7 +11,7 @@ export default {
   },
   created () {
     if (localStorage.getItem('user') === null) {
-      this.$router.push('/Login')
+      this.$router.push('/Login').catch(() => {})
     }
   }
 }

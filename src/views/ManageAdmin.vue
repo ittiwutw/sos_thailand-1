@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     CreateAdmin () {
-      this.$router.push({ path: '/CreateUser?State=ADMIN' })
+      this.$router.push({ path: '/CreateUser?State=ADMIN' }).catch(() => {})
     }
   }
 }
