@@ -40,6 +40,10 @@
                 <span>สถานะการดำเนินการ :</span>
                 <span>{{ Status }}</span>
               </a-row>
+              <a-row type="flex" class="ma-5" justify="space-between">
+                <span>รายละเอียด :</span>
+                <span>{{ discription }}</span>
+              </a-row>
             </a-col>
             <a-col :span='12'>
               <a-card class="mt-2">
@@ -70,7 +74,8 @@ export default {
       OfficerEmail: '-',
       Officerphone: '-',
       Status: '-',
-      Type: '-'
+      Type: '-',
+      discription: '-'
     }
   },
   computed: {
@@ -80,18 +85,19 @@ export default {
   },
   watch: {
     props (val) {
-      console.log('Open', val)
+      console.log('Open-------->>>', val)
       if (val.sosImgs !== 'undefined') {
         this.Img = JSON.parse(val.sosImgs)[0]
       }
-      this.Username = val.userProfile[0].name
-      this.UserEmail = val.userProfile[0].email
-      this.UserPhone = val.userProfile[0].tel
-      if (val.officerProfile.length !== 0) {
-        this.Officername = val.officerProfile[0].name
-        this.OfficerEmail = val.officerProfile[0].email
-        this.Officerphone = val.officerProfile[0].tel
-      }
+      this.Username = val.userReqName
+      // this.UserEmail = val.userProfile[0].email
+      // this.UserPhone = val.userProfile[0].tel
+      // if (val.officerProfile.length !== 0) {
+      this.Officername = val.officerName
+      // this.OfficerEmail = val.officerProfile[0].email
+      this.Officerphone = val.officerTel
+      // }
+      this.discription = val.description
       this.Type = val.typeName
       this.Status = val.status
     }
