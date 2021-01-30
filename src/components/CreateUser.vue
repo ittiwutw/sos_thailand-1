@@ -302,7 +302,7 @@ export default {
         password: this.password,
         name: this.name,
         tel: this.tel,
-        serviceTypeName: user.adminAreaType,
+        adminAreaType: user.adminAreaType,
         logoImg: this.ImageBase64,
         userType: this.StateCreate,
         adminProvince: user.adminProvince,
