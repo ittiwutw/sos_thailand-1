@@ -113,6 +113,7 @@
                   v-model="DataImage"
                   @change="UploadImage()"
                   id="file_input"
+                  accept=".png"
                   style="display:none"></v-file-input>
                   <a-card class="ml-15" v-if="Imageurl === ''">
                     <v-img max-width="150" src='@/assets/addimg.jpg'></v-img>
