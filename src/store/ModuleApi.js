@@ -9,7 +9,10 @@ const ModuleApi = {
     DataReport: '',
     DataHistory: '',
     CreateUser: '',
-    EditUser: ''
+    EditUser: '',
+    GetListProvince: '',
+    GetListDistrict: '',
+    GetListSubDistrict: ''
   },
   mutations: {
     SetDataLogin (state, data) {
@@ -38,6 +41,15 @@ const ModuleApi = {
     },
     SetEditUser (state, data) {
       state.EditUser = data
+    },
+    SetGetListProvince (state, data) {
+      state.GetListProvince = data
+    },
+    SetGetListDistrict (state, data) {
+      state.GetListDistrict = data
+    },
+    SetGetListSubDistrict (state, data) {
+      state.GetListSubDistrict = data
     }
   },
   actions: {
@@ -81,6 +93,27 @@ const ModuleApi = {
       // console.log('ก่อนยิง api Edit', data)
       var res = await axios.post(`${process.env.VUE_APP_API}updateUser`, data)
       await context.commit('SetEditUser', res.data)
+    },
+    async GetListProvince (context) {
+      var data = {
+        table: 'provinces'
+      }
+      var res = await axios.post(`${process.env.VUE_APP_API}/getMasterBytable`, data)
+      context.commit('SetGetListProvince', res.data)
+    },
+    async GetListDistrict (context, val) {
+      var data = {
+        table: `amphures WHERE province_id = ${val}`
+      }
+      var res = await axios.post(`${process.env.VUE_APP_API}/getMasterBytable`, data)
+      context.commit('SetGetListDistrict', res.data)
+    },
+    async GetListSubDistrict (context, val) {
+      var data = {
+        table: `districts WHERE amphure_id = ${val}`
+      }
+      var res = await axios.post(`${process.env.VUE_APP_API}/getMasterBytable`, data)
+      context.commit('SetGetListSubDistrict', res.data)
     }
   }
 }

@@ -85,9 +85,18 @@
             </a-col>
             <a-col :md='14' :xs="16">
               <a-row type="flex" :gutter="[16,0]">
-                <a-col :span='24'><addressinput-subdistrict label="" placeholder="ตำบล/เเขวง"  v-model="subdistrict" /></a-col>
+                <!-- <a-col :span='24'><addressinput-subdistrict label="" placeholder="ตำบล/เเขวง"  v-model="subdistrict" /></a-col>
                 <a-col :span='24' class="mt-5"><addressinput-district label="" placeholder="อำเภอ/เขต"  v-model="district" /></a-col>
-                <a-col :span='24' class="mt-5"><addressinput-province label="" placeholder="จังหวัด"  v-model="province" /></a-col>
+                <a-col :span='24' class="mt-5"><addressinput-province label="" placeholder="จังหวัด"  v-model="province" /></a-col> -->
+                <a-col :span='24'>
+                  <v-autocomplete outlined dense :items="ListProvince" v-model="province" item-text="name_th" item-value="name_th" placeholder="จังหวัด" :rules="Rules.province"></v-autocomplete>
+                </a-col>
+                <a-col :span='24'>
+                  <v-autocomplete outlined dense :items="ListDistrict" v-model="district" item-text="name_th" item-value="name_th" placeholder="เขต/อำเภอ" :rules="Rules.district"></v-autocomplete>
+                </a-col>
+                <a-col :span='24'>
+                  <v-autocomplete outlined dense :items="ListSubDistrict" v-model="subdistrict" item-text="name_th" item-value="name_th" placeholder="พื้นที่รับผิดชอบตาม" :rules="Rules.subdistrict"></v-autocomplete>
+                </a-col>
               </a-row>
             </a-col>
           </a-row>
@@ -97,9 +106,15 @@
             </a-col>
             <a-col :md='14' :xs="16">
               <a-row type="flex" :gutter="[16,0]">
-                <a-col :span='24'><addressinput-subdistrict label="" placeholder="ตำบล/เเขวง"  v-model="subdistrict" disabled /></a-col>
-                <a-col :span='24' class="mt-5"><addressinput-district label="" placeholder="อำเภอ/เขต"  v-model="district" disabled /></a-col>
-                <a-col :span='24' class="mt-5"><addressinput-province label="" placeholder="จังหวัด"  v-model="province" disabled /></a-col>
+                <a-col :span='24'>
+                  <v-autocomplete outlined dense :items="ListProvince" v-model="province" item-text="name_th" item-value="name_th" placeholder="จังหวัด" :rules="Rules.province" disabled></v-autocomplete>
+                </a-col>
+                <a-col :span='24'>
+                  <v-autocomplete outlined dense :items="ListDistrict" v-model="district" item-text="name_th" item-value="name_th" placeholder="เขต/อำเภอ" :rules="Rules.district" disabled></v-autocomplete>
+                </a-col>
+                <a-col :span='24'>
+                  <v-autocomplete outlined dense :items="ListSubDistrict" v-model="subdistrict" item-text="name_th" item-value="name_th" placeholder="พื้นที่รับผิดชอบตาม" :rules="Rules.subdistrict" disabled></v-autocomplete>
+                </a-col>
               </a-row>
             </a-col>
           </a-row>
@@ -173,6 +188,9 @@ export default {
         { name: 'เขต', key: '2' },
         { name: 'จังหวัด', key: '3' }
       ],
+      ListProvince: [],
+      ListDistrict: [],
+      ListSubDistrict: [],
       name: '',
       email: '',
       password: '',
@@ -186,6 +204,9 @@ export default {
       StateCreate: this.$router.currentRoute.query.State,
       Rules: {
         name: [(v) => !!v || 'กรุณาระบุชื่อผู้ใช้งาน'],
+        province: [(v) => !!v || 'กรุณาเลือกจังหวัด'],
+        district: [(v) => !!v || 'กรุณาเลือก อำเภอ/เขต'],
+        subdistrict: [(v) => !!v || 'กรุณาเลือก ตำบล/เเขวง'],
         location: [(v) => !!v || 'กรุณาระบุสถานที่ปฏิบัติงาน'],
         email: [
           (v) => !!v || 'กรุณากรอกข้อมูล',
@@ -201,6 +222,20 @@ export default {
           (v) => (v.length >= 9) || 'รหัสผ่านต้องมีอย่างน้อย 9 ตัวอักษร'
         ]
       }
+    }
+  },
+  watch: {
+    province (val) {
+      const result = this.ListProvince.filter((data) => {
+        return data.name_th === val
+      })
+      this.GetDistrict(result[0].id)
+    },
+    district (val) {
+      const result = this.ListDistrict.filter((data) => {
+        return data.name_th === val
+      })
+      this.GetSubDistrict(result[0].id)
     }
   },
   created () {
@@ -261,9 +296,22 @@ export default {
       this.job = ''
       this.area = ''
       this.tel = ''
+      this.GetListProvince()
     }
   },
   methods: {
+    async GetDistrict (val) {
+      await this.$store.dispatch('GetListDistrict', val)
+      this.ListDistrict = this.$store.state.ModuleApi.GetListDistrict.data
+    },
+    async GetSubDistrict (val) {
+      await this.$store.dispatch('GetListSubDistrict', val)
+      this.ListSubDistrict = this.$store.state.ModuleApi.GetListSubDistrict.data
+    },
+    async GetListProvince () {
+      await this.$store.dispatch('GetListProvince')
+      this.ListProvince = this.$store.state.ModuleApi.GetListProvince.data
+    },
     onPickFile () {
       document.getElementById('file_input').click()
     },
