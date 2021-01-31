@@ -54,7 +54,7 @@ export default {
       ],
       NavigatorAdmin: [
         { key: 'manu1', text: 'จัดการเจ้าหน้าที่', path: '/', name: 'ManageOfficer' },
-        // { key: 'manu2', text: 'จัดการผู้ให้บริการ', path: '/ManageService', name: 'ManageService' },
+        // { key: 'manu2', text: 'อนุมัติเจ้าหน้าที่', path: '/ApprovedOfficer', name: 'ApprovedOfficer' },
         { key: 'manu3', text: 'รายงานการเเจ้งเหตุ', path: '/Report', name: 'Report' },
         { key: 'manu4', text: 'ประวัติการเเจ้งเหตุ', path: '/History', name: 'History' },
         { key: 'manu5', text: 'เเก้ไขข้อมูล', path: '/EditUser', name: 'EditUser' }
