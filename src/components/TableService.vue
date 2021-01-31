@@ -60,7 +60,7 @@ export default {
         { text: 'Job', sortable: false, value: 'job', align: 'center' },
         { text: 'หมายเลขโทรศัพท์', sortable: false, value: 'tel', align: 'center' },
         { text: 'สถานะ', sortable: false, value: 'activeFlag', align: 'center' },
-        { text: 'กำหนดสิทธิ์', sortable: false, value: 'edit', align: 'center' },
+        { text: 'ใช้งาน/ไม่ใช้งาน', sortable: false, value: 'edit', align: 'center' },
         { text: 'รายละเอียด', sortable: false, value: 'detail', align: 'center' }
       ]
     }

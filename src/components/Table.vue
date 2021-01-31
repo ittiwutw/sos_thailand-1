@@ -62,7 +62,7 @@ export default {
         { text: 'หมายเลขโทรศัพท์', sortable: false, value: 'tel', align: 'center' },
         { text: 'เขต', sortable: false, value: 'adminDistrict', align: 'center' },
         { text: 'สถานะ', sortable: false, value: 'activeFlag', align: 'center' },
-        { text: 'กำหนดสิทธิ์', sortable: false, value: 'edit', align: 'center' },
+        { text: 'ใช้งาน/ไม่ใช้งาน', sortable: false, value: 'edit', align: 'center' },
         { text: 'รายละเอียด', sortable: false, value: 'edit3', align: 'center' }
       ]
     }
