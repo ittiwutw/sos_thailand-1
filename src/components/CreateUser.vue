@@ -107,13 +107,13 @@
             <a-col :md='14' :xs="16">
               <a-row type="flex" :gutter="[16,0]">
                 <a-col :span='24'>
-                  <v-autocomplete outlined dense :items="ListProvince" v-model="province" item-text="name_th" item-value="name_th" placeholder="จังหวัด" :rules="Rules.province" disabled></v-autocomplete>
+                  <v-text-field outlined dense  v-model="province" placeholder="จังหวัด" :rules="Rules.province" disabled></v-text-field>
                 </a-col>
                 <a-col :span='24'>
-                  <v-autocomplete outlined dense :items="ListDistrict" v-model="district" item-text="name_th" item-value="name_th" placeholder="เขต/อำเภอ" :rules="Rules.district" disabled></v-autocomplete>
+                  <v-text-field outlined dense v-model="district" item-value="name_th" placeholder="เขต/อำเภอ" :rules="Rules.district" disabled></v-text-field>
                 </a-col>
                 <a-col :span='24'>
-                  <v-autocomplete outlined dense :items="ListSubDistrict" v-model="subdistrict" item-text="name_th" item-value="name_th" placeholder="พื้นที่รับผิดชอบตาม" :rules="Rules.subdistrict" disabled></v-autocomplete>
+                  <v-text-field outlined dense v-model="subdistrict"  placeholder="พื้นที่รับผิดชอบตาม" :rules="Rules.subdistrict" disabled></v-text-field>
                 </a-col>
               </a-row>
             </a-col>
@@ -226,16 +226,20 @@ export default {
   },
   watch: {
     province (val) {
-      const result = this.ListProvince.filter((data) => {
-        return data.name_th === val
-      })
-      this.GetDistrict(result[0].id)
+      if (this.StateCreate !== 'OFFICER') {
+        const result = this.ListProvince.filter((data) => {
+          return data.name_th === val
+        })
+        this.GetDistrict(result[0].id)
+      }
     },
     district (val) {
-      const result = this.ListDistrict.filter((data) => {
-        return data.name_th === val
-      })
-      this.GetSubDistrict(result[0].id)
+      if (this.StateCreate !== 'OFFICER') {
+        const result = this.ListDistrict.filter((data) => {
+          return data.name_th === val
+        })
+        this.GetSubDistrict(result[0].id)
+      }
     }
   },
   created () {
@@ -269,6 +273,7 @@ export default {
       this.tel = user.tel
     } else {
       if (user.userType === 'ADMIN') {
+        console.log('เข้า if', user)
         this.userType = user.userType
         this.email = ''
         this.password = ''
@@ -289,14 +294,17 @@ export default {
           this.SelectArea = 'จังหวัด'
           this.province = user.adminResponsibilityArea
         }
+      } else {
+        console.log('เข้า else')
+
+        this.userType = user.userType
+        this.email = ''
+        this.password = ''
+        this.job = ''
+        this.area = ''
+        this.tel = ''
+        this.GetListProvince()
       }
-      this.userType = user.userType
-      this.email = ''
-      this.password = ''
-      this.job = ''
-      this.area = ''
-      this.tel = ''
-      this.GetListProvince()
     }
   },
   methods: {
