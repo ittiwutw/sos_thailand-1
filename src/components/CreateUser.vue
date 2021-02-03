@@ -107,13 +107,13 @@
             <a-col :md='14' :xs="16">
               <a-row type="flex" :gutter="[16,0]">
                 <a-col :span='24'>
-                  <v-text-field outlined dense  v-model="province" placeholder="จังหวัด" :rules="Rules.province" disabled></v-text-field>
+                  <v-text-field outlined dense  v-model="province" placeholder="จังหวัด" disabled></v-text-field>
                 </a-col>
                 <a-col :span='24'>
-                  <v-text-field outlined dense v-model="district" item-value="name_th" placeholder="เขต/อำเภอ" :rules="Rules.district" disabled></v-text-field>
+                  <v-text-field outlined dense v-model="district" item-value="name_th" placeholder="เขต/อำเภอ"  disabled></v-text-field>
                 </a-col>
                 <a-col :span='24'>
-                  <v-text-field outlined dense v-model="subdistrict"  placeholder="พื้นที่รับผิดชอบตาม" :rules="Rules.subdistrict" disabled></v-text-field>
+                  <v-text-field outlined dense v-model="subdistrict"  placeholder="พื้นที่รับผิดชอบตาม" disabled></v-text-field>
                 </a-col>
               </a-row>
             </a-col>
@@ -273,7 +273,6 @@ export default {
       this.tel = user.tel
     } else {
       if (user.userType === 'ADMIN') {
-        console.log('เข้า if', user)
         this.userType = user.userType
         this.email = ''
         this.password = ''
@@ -352,12 +351,12 @@ export default {
     },
     async CreateOfficer () {
       var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
-      // console.log('User Create Officer', user)
       var data = {
         email: this.email,
         password: this.password,
         name: this.name,
         tel: this.tel,
+        activeFlag: 1,
         adminAreaType: user.adminAreaType,
         logoImg: this.ImageBase64,
         userType: this.StateCreate,
@@ -366,7 +365,6 @@ export default {
         adminSubDistrict: user.adminSubDistrict,
         adminCompanyName: user.adminCompanyName
       }
-      // console.log('data==== edit Office', data)
       await this.$store.dispatch('CreateUser', data)
       var res = this.$store.state.ModuleApi.CreateUser
       if (res.response_code === 'SUCCESS') {

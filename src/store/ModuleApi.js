@@ -88,7 +88,9 @@ const ModuleApi = {
       context.commit('SetDataHistory', res.data)
     },
     async CreateUser (context, data) {
+      console.log('ก่อนยิง api', data)
       var res = await axios.post(`${process.env.VUE_APP_API}createUsers`, data)
+      console.log('ข้อมูลหลังยิง', res)
       await context.commit('SetCreateUser', res.data)
     },
     async EditUser (context, data) {
