@@ -294,8 +294,6 @@ export default {
           this.province = user.adminResponsibilityArea
         }
       } else {
-        console.log('เข้า else')
-
         this.userType = user.userType
         this.email = ''
         this.password = ''
