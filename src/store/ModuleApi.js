@@ -54,7 +54,9 @@ const ModuleApi = {
   },
   actions: {
     async Login (context, val) {
+      console.log('ข้อมูลที่ยิง api login', val)
       var res = await axios.post(`${process.env.VUE_APP_API}login`, val)
+      console.log('ข้อมูลหลังยิง api login', res)
       context.commit('SetDataLogin', res.data)
     },
     async GetUserOfficer (context, val) {
