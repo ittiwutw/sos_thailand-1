@@ -89,7 +89,7 @@ export default {
         this.$EventBus.$emit('GetService')
       } else {
         this.$swal({
-          icon: 'erroe',
+          icon: 'error',
           text: 'สร้างประเภทให้บริการไม่สำเร็จ',
           showConfirmButton: false,
           timer: 2000

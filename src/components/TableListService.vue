@@ -18,7 +18,7 @@
           >
           <template v-slot:[`item.edit`]="{ item }">
                 <a-button @click="edit(item)">เเก้ไข</a-button>
-                <!-- <a-button class="ml-3">ลบ</a-button> -->
+                <a-button class="ml-3" @click="Delete(item)">ลบ</a-button>
           </template>
           </v-data-table>
         </v-card>
@@ -73,6 +73,29 @@ export default {
       this.dataEdit = val
       this.TypeStatus = 'เเก้ไขประเภทให้บริการ'
       this.$store.commit('SetModalListService')
+    },
+    async Delete (val) {
+      var data = {
+        serviceTypeId: val.serviceTypeId
+      }
+      this.$store.dispatch('DeleteListService', data)
+      var res = this.$store.state.ModuleApi.DeleteListService
+      if (res.response_description === 'SUCCESS') {
+        this.$swal({
+          icon: 'success',
+          text: 'ลบประเภทให้บริการสำเร็จ',
+          showConfirmButton: false,
+          timer: 2000
+        })
+        this.$EventBus.$emit('GetService')
+      } else {
+        this.$swal({
+          icon: 'error',
+          text: 'ลบประเภทให้บริการไม่สำเร็จ',
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }
     }
   }
 }

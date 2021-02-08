@@ -16,7 +16,8 @@ const ModuleApi = {
     GetListService: '',
     CreateListService: '',
     ModalListService: false,
-    EditListService: ''
+    EditListService: '',
+    DeleteListService: ''
   },
   mutations: {
     SetModalListService (state) {
@@ -66,12 +67,15 @@ const ModuleApi = {
     },
     SetEditListService (state, data) {
       state.EditListService = data
+    },
+    SetDeleteListService (state, data) {
+      state.DeleteListService = data
     }
   },
   actions: {
     async Login (context, val) {
       console.log('ข้อมูลที่ยิง api login', val)
-      var res = await axios.post(`${process.env.VUE_APP_API}login`, val)
+      var res = await axios.post(`${process.env.VUE_APP_API}/login`, val)
       console.log('ข้อมูลหลังยิง api login', res)
       context.commit('SetDataLogin', res.data)
     },
@@ -101,25 +105,25 @@ const ModuleApi = {
       var data = {
         where: `WHERE (req.status = 'WAITING' OR req.status = 'PROCESSING') AND req.request${val.type} LIKE '%${val.area}%'`
       }
-      var res = await axios.post(`${process.env.VUE_APP_API}getAllSOSRequest`, data)
+      var res = await axios.post(`${process.env.VUE_APP_API}/getAllSOSRequest`, data)
       context.commit('SetDataReport', res.data)
     },
     async GetHistory (context, val) {
       var data = {
         where: `WHERE (req.status = 'FINISHED' OR req.status = 'CANCEL') AND req.request${val.type} LIKE '%${val.area}%'`
       }
-      var res = await axios.post(`${process.env.VUE_APP_API}getAllSOSRequest`, data)
+      var res = await axios.post(`${process.env.VUE_APP_API}/getAllSOSRequest`, data)
       context.commit('SetDataHistory', res.data)
     },
     async CreateUser (context, data) {
       // console.log('ก่อนยิง api', data)
-      var res = await axios.post(`${process.env.VUE_APP_API}createUsers`, data)
+      var res = await axios.post(`${process.env.VUE_APP_API}/createUsers`, data)
       // console.log('ข้อมูลหลังยิง', res)
       await context.commit('SetCreateUser', res.data)
     },
     async EditUser (context, data) {
       // console.log('ก่อนยิง api Edit', data)
-      var res = await axios.post(`${process.env.VUE_APP_API}updateUser`, data)
+      var res = await axios.post(`${process.env.VUE_APP_API}/updateUser`, data)
       await context.commit('SetEditUser', res.data)
     },
     async GetListProvince (context) {
@@ -150,6 +154,11 @@ const ModuleApi = {
     async EditListService (context, val) {
       var res = await axios.post(`${process.env.VUE_APP_API}/editServiceType`, val)
       context.commit('SetEditListService', res.data)
+    },
+    async DeleteListService (context, val) {
+      console.log('ก่อนยิง api delete', val)
+      var res = await axios.post(`${process.env.VUE_APP_API}/delete`, val)
+      context.commit('SetDeleteListService', res.data)
     }
   }
 }
