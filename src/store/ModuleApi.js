@@ -12,9 +12,16 @@ const ModuleApi = {
     EditUser: '',
     GetListProvince: '',
     GetListDistrict: '',
-    GetListSubDistrict: ''
+    GetListSubDistrict: '',
+    GetListService: '',
+    CreateListService: '',
+    ModalListService: false,
+    EditListService: ''
   },
   mutations: {
+    SetModalListService (state) {
+      state.ModalListService = !state.ModalListService
+    },
     SetDataLogin (state, data) {
       state.DataLogin = data
     },
@@ -50,6 +57,15 @@ const ModuleApi = {
     },
     SetGetListSubDistrict (state, data) {
       state.GetListSubDistrict = data
+    },
+    SetGetListService (state, data) {
+      state.GetListService = data
+    },
+    SetCreateListService (state, data) {
+      state.CreateListService = data
+    },
+    SetEditListService (state, data) {
+      state.EditListService = data
     }
   },
   actions: {
@@ -64,6 +80,14 @@ const ModuleApi = {
       var res = await axios.get(`${process.env.VUE_APP_API}/getAllUserByCompanyName?adminCompanyName=${val}`)
       // console.log('adminCompanyName', res)
       context.commit('SetDataUserOfficer', res.data)
+    },
+    async GetListService (context) {
+      var data = {
+        table: 'serviceType'
+      }
+      var res = await axios.post(`${process.env.VUE_APP_API}/getMasterByTable`, data)
+      console.log('GetListService ==', res)
+      context.commit('SetGetListService', res.data)
     },
     async GetUserAdmin (context) {
       var res = await axios.get(`${process.env.VUE_APP_API}/getAllUserByUserType?userType=ADMIN`)
@@ -118,6 +142,14 @@ const ModuleApi = {
       }
       var res = await axios.post(`${process.env.VUE_APP_API}/getMasterBytable`, data)
       context.commit('SetGetListSubDistrict', res.data)
+    },
+    async CreateListService (context, val) {
+      var res = await axios.post(`${process.env.VUE_APP_API}/addServiceType`, val)
+      context.commit('SetCreateListService', res.data)
+    },
+    async EditListService (context, val) {
+      var res = await axios.post(`${process.env.VUE_APP_API}/editServiceType`, val)
+      context.commit('SetEditListService', res.data)
     }
   }
 }

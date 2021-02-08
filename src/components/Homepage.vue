@@ -48,8 +48,8 @@ export default {
         // { key: 'manu1', text: 'จัดการเจ้าหน้าที่', path: '/', name: 'ManageOfficer' },
         { key: 'manu2', text: 'จัดการผู้ให้บริการ', path: '/ManageService', name: 'ManageService' },
         { key: 'manu3', text: 'จัดการแอดมิน', path: '/ManageAdmin', name: 'ManageAdmin' },
-        { key: 'manu4', text: 'เเก้ไขข้อมูล', path: '/EditUser', name: 'EditUser' }
-        // { icon: 'mdi-chart-timeline-variant', text: 'ระบบบัญชีและการเงิน' },
+        { key: 'manu4', text: 'เเก้ไขข้อมูล', path: '/EditUser', name: 'EditUser' },
+        { key: 'manu5', text: 'ประเภทการให้บริการ', path: '/AddService', name: 'AddService' }
         // { icon: 'mdi-chart-timeline-variant', text: 'ระบบบริหารบุคลากร', child: [{ name: 'Tbnoung' }] }
       ],
       NavigatorAdmin: [
