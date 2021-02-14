@@ -2,7 +2,7 @@
   <div>
     <a-row type="flex" justify="center">
       <a-col :xs="24" :md="20" class="mt-5 mb-5">
-        <span class="headline">จัดการเจ้าหน้าที่</span>
+        <span class="headline">Manage Officer Section</span>
       </a-col>
       <a-col :xs="24" :md="20" class="mb-3">
         <a-row type="flex">
@@ -30,7 +30,7 @@ export default {
   },
 
   async created () {
-    this.$EventBus.$emit('StatusHeader', 'จัดการเจ้าหน้าที่')
+    this.$EventBus.$emit('StatusHeader', 'Manage Officer Section')
     var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
     // console.log('Manage Office =', user)
     await this.$store.dispatch('GetUserOfficer', user.adminCompanyName)

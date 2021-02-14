@@ -92,10 +92,10 @@
                   <v-autocomplete outlined dense :items="ListProvince" v-model="province" item-text="name_th" item-value="name_th" placeholder="จังหวัด" :rules="Rules.province"></v-autocomplete>
                 </a-col>
                 <a-col :span='24'>
-                  <v-autocomplete outlined dense :items="ListDistrict" v-model="district" item-text="name_th" item-value="name_th" placeholder="เขต/อำเภอ" :rules="Rules.district"></v-autocomplete>
+                  <v-autocomplete v-if="(SelectArea === 'เขต' || SelectArea === 'เเขวง') " outlined dense :items="ListDistrict" v-model="district" item-text="name_th" item-value="name_th" placeholder="เขต/อำเภอ" :rules="Rules.district"></v-autocomplete>
                 </a-col>
                 <a-col :span='24'>
-                  <v-autocomplete outlined dense :items="ListSubDistrict" v-model="subdistrict" item-text="name_th" item-value="name_th" placeholder="พื้นที่รับผิดชอบตาม" :rules="Rules.subdistrict"></v-autocomplete>
+                  <v-autocomplete v-if="SelectArea === 'เเขวง'" outlined dense :items="ListSubDistrict" v-model="subdistrict" item-text="name_th" item-value="name_th" placeholder="เเขวง/ตำบล" :rules="Rules.subdistrict"></v-autocomplete>
                 </a-col>
               </a-row>
             </a-col>
@@ -113,7 +113,7 @@
                   <v-text-field outlined dense v-model="district" item-value="name_th" placeholder="เขต/อำเภอ"  disabled></v-text-field>
                 </a-col>
                 <a-col :span='24'>
-                  <v-text-field outlined dense v-model="subdistrict"  placeholder="พื้นที่รับผิดชอบตาม" disabled></v-text-field>
+                  <v-text-field outlined dense v-model="subdistrict"  placeholder="เเขวง/ตำบล" disabled></v-text-field>
                 </a-col>
               </a-row>
             </a-col>
@@ -187,6 +187,7 @@ export default {
         { name: 'เเขวง', key: '1' },
         { name: 'เขต', key: '2' },
         { name: 'จังหวัด', key: '3' }
+        // { name: 'ระดับประเทศ', key: '4' }
       ],
       ListProvince: [],
       ListDistrict: [],
@@ -205,8 +206,8 @@ export default {
       Rules: {
         name: [(v) => !!v || 'กรุณาระบุชื่อผู้ใช้งาน'],
         province: [(v) => !!v || 'กรุณาเลือกจังหวัด'],
-        district: [(v) => !!v || 'กรุณาเลือก อำเภอ/เขต'],
-        subdistrict: [(v) => !!v || 'กรุณาเลือก ตำบล/เเขวง'],
+        district: [(v) => !!v || 'กรุณาเลือก เขต/อำเภอ'],
+        subdistrict: [(v) => !!v || 'กรุณาเลือก เเขวง/ตำบล'],
         location: [(v) => !!v || 'กรุณาระบุสถานที่ปฏิบัติงาน'],
         email: [
           (v) => !!v || 'กรุณากรอกข้อมูล',
@@ -226,19 +227,23 @@ export default {
   },
   watch: {
     province (val) {
-      if (this.StateCreate !== 'OFFICER') {
-        const result = this.ListProvince.filter((data) => {
-          return data.name_th === val
-        })
-        this.GetDistrict(result[0].id)
+      if (this.ListProvince.length !== 0) {
+        if (this.StateCreate !== 'OFFICER') {
+          const result = this.ListProvince.filter((data) => {
+            return data.name_th === val
+          })
+          this.GetDistrict(result[0].id)
+        }
       }
     },
     district (val) {
-      if (this.StateCreate !== 'OFFICER') {
-        const result = this.ListDistrict.filter((data) => {
-          return data.name_th === val
-        })
-        this.GetSubDistrict(result[0].id)
+      if (this.ListDistrict.length !== 0) {
+        if (this.StateCreate !== 'OFFICER') {
+          const result = this.ListDistrict.filter((data) => {
+            return data.name_th === val
+          })
+          this.GetSubDistrict(result[0].id)
+        }
       }
     }
   },
@@ -271,6 +276,7 @@ export default {
       }
       // this.area = user.area
       this.tel = user.tel
+      this.GetListProvince()
     } else {
       if (user.userType === 'ADMIN') {
         this.userType = user.userType
@@ -416,9 +422,10 @@ export default {
         adminSubDistrict: this.subdistrict,
         adminCompanyName: this.location
       }
+      console.log('data ก่อนสร้าง user', data)
       await this.$store.dispatch('CreateUser', data)
       var res = this.$store.state.ModuleApi.CreateUser
-      // console.log('ข้อมูลหลังสร้าง user', res)
+      console.log('ข้อมูลหลังสร้าง user', res)
       if (res.response_code === 'SUCCESS') {
         this.$swal({
           icon: 'success',

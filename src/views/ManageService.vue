@@ -2,7 +2,7 @@
   <div>
     <a-row type="flex" justify="center">
       <a-col :xs="24" :md="20" class="mt-5 mb-5">
-        <span class="headline">จัดการผู้ให้บริการ</span>
+        <span class="headline">Manage Service Section</span>
       </a-col>
       <a-col :xs="24" :md="20" class="mb-3">
         <a-row type="flex">
@@ -28,7 +28,7 @@ export default {
     }
   },
   async created () {
-    this.$EventBus.$emit('StatusHeader', 'จัดการผู้ให้บริการ')
+    this.$EventBus.$emit('StatusHeader', 'Manage Service Section')
     await this.$store.dispatch('GetUserService')
     var data = this.$store.state.ModuleApi.DataUserService
     data.data.forEach((element, index) => {

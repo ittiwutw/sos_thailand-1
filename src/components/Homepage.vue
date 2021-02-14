@@ -45,15 +45,15 @@ export default {
       picture: '',
       username: '',
       NavigatorSuperAdmin: [
-        // { key: 'manu1', text: 'จัดการเจ้าหน้าที่', path: '/', name: 'ManageOfficer' },
-        { key: 'manu2', text: 'จัดการผู้ให้บริการ', path: '/ManageService', name: 'ManageService' },
-        { key: 'manu3', text: 'จัดการแอดมิน', path: '/ManageAdmin', name: 'ManageAdmin' },
+        // { key: 'manu1', text: 'Manage เจ้าหน้าที่', path: '/', name: 'ManageOfficer' },
+        { key: 'manu2', text: 'Manage Service Section', path: '/ManageService', name: 'ManageService' },
+        { key: 'manu3', text: 'Manage Area Admin', path: '/ManageAdmin', name: 'ManageAdmin' },
         { key: 'manu4', text: 'เเก้ไขข้อมูล', path: '/EditUser', name: 'EditUser' },
         { key: 'manu5', text: 'ประเภทการให้บริการ', path: '/AddService', name: 'AddService' }
         // { icon: 'mdi-chart-timeline-variant', text: 'ระบบบริหารบุคลากร', child: [{ name: 'Tbnoung' }] }
       ],
       NavigatorAdmin: [
-        { key: 'manu1', text: 'จัดการเจ้าหน้าที่', path: '/', name: 'ManageOfficer' },
+        { key: 'manu1', text: 'Manage Officer Section', path: '/', name: 'ManageOfficer' },
         // { key: 'manu2', text: 'อนุมัติเจ้าหน้าที่', path: '/ApprovedOfficer', name: 'ApprovedOfficer' },
         { key: 'manu3', text: 'รายงานการเเจ้งเหตุ', path: '/Report', name: 'Report' },
         { key: 'manu4', text: 'ประวัติการเเจ้งเหตุ', path: '/History', name: 'History' },
@@ -87,7 +87,7 @@ export default {
       this.Navigator = this.NavigatorAdmin
     } else if (checkuser.userType === 'SUPERADMIN') {
       this.Navigator = this.NavigatorSuperAdmin
-      this.Header = 'จัดการผู้ให้บริการ'
+      this.Header = 'Manage ผู้ให้บริการ'
       this.$router.push({ path: '/ManageService' }).catch(() => {})
     } else {
       this.Navigator = this.NavigatorDefault

@@ -116,7 +116,7 @@ const ModuleApi = {
       context.commit('SetDataHistory', res.data)
     },
     async CreateUser (context, data) {
-      // console.log('ก่อนยิง api', data)
+      console.log('ก่อนยิงสร้าง user api', data)
       var res = await axios.post(`${process.env.VUE_APP_API}/createUsers`, data)
       // console.log('ข้อมูลหลังยิง', res)
       await context.commit('SetCreateUser', res.data)
@@ -130,7 +130,9 @@ const ModuleApi = {
       var data = {
         table: 'provinces'
       }
+      console.log('ก่อนยิง จังหวัด', data)
       var res = await axios.post(`${process.env.VUE_APP_API}/getMasterBytable`, data)
+      console.log('หลังยิงจังหวัด', res)
       context.commit('SetGetListProvince', res.data)
     },
     async GetListDistrict (context, val) {

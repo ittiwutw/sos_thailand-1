@@ -2,7 +2,7 @@
   <div>
     <a-row type="flex" justify="center">
       <a-col :xs="24" :md="20" class="mt-5 mb-5">
-        <span class="headline">จัดการแอดมิน</span>
+        <span class="headline">Manage Area Admin</span>
       </a-col>
       <a-col :xs="24" :md="20" class="mb-3">
         <a-row type="flex">
@@ -28,7 +28,7 @@ export default {
     }
   },
   async created () {
-    this.$EventBus.$emit('StatusHeader', 'จัดการแอดมิน')
+    this.$EventBus.$emit('StatusHeader', 'Manage Area Admin')
     await this.$store.dispatch('GetUserAdmin')
     var data = this.$store.state.ModuleApi.DataUserAdmin
     data.data.forEach((element, index) => {
