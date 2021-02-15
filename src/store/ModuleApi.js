@@ -74,9 +74,9 @@ const ModuleApi = {
   },
   actions: {
     async Login (context, val) {
-      console.log('ข้อมูลที่ยิง api login', val)
+      // console.log('ข้อมูลที่ยิง api login', val)
       var res = await axios.post(`${process.env.VUE_APP_API}/login`, val)
-      console.log('ข้อมูลหลังยิง api login', res)
+      // console.log('ข้อมูลหลังยิง api login', res)
       context.commit('SetDataLogin', res.data)
     },
     async GetUserOfficer (context, val) {
@@ -90,7 +90,7 @@ const ModuleApi = {
         table: 'serviceType'
       }
       var res = await axios.post(`${process.env.VUE_APP_API}/getMasterByTable`, data)
-      console.log('GetListService ==', res)
+      // console.log('GetListService ==', res)
       context.commit('SetGetListService', res.data)
     },
     async GetUserAdmin (context) {
@@ -102,21 +102,35 @@ const ModuleApi = {
       context.commit('SetDataUserService', res.data)
     },
     async GetReport (context, val) {
-      var data = {
-        where: `WHERE (req.status = 'WAITING' OR req.status = 'PROCESSING') AND req.request${val.type} LIKE '%${val.area}%'`
+      var data = ''
+      if (val.type === 'ALL') {
+        data = {
+          where: "WHERE (req.status = 'WAITING' OR req.status = 'PROCESSING')"
+        }
+      } else {
+        data = {
+          where: `WHERE (req.status = 'WAITING' OR req.status = 'PROCESSING') AND req.request${val.type} LIKE '%${val.area}%'`
+        }
       }
       var res = await axios.post(`${process.env.VUE_APP_API}/getAllSOSRequest`, data)
       context.commit('SetDataReport', res.data)
     },
     async GetHistory (context, val) {
-      var data = {
-        where: `WHERE (req.status = 'FINISHED' OR req.status = 'CANCEL') AND req.request${val.type} LIKE '%${val.area}%'`
+      var data = ''
+      if (val.type === 'ALL') {
+        data = {
+          where: "WHERE (req.status = 'FINISHED' OR req.status = 'CANCEL')"
+        }
+      } else {
+        data = {
+          where: `WHERE (req.status = 'FINISHED' OR req.status = 'CANCEL') AND req.request${val.type} LIKE '%${val.area}%'`
+        }
       }
       var res = await axios.post(`${process.env.VUE_APP_API}/getAllSOSRequest`, data)
       context.commit('SetDataHistory', res.data)
     },
     async CreateUser (context, data) {
-      console.log('ก่อนยิงสร้าง user api', data)
+      // console.log('ก่อนยิงสร้าง user api', data)
       var res = await axios.post(`${process.env.VUE_APP_API}/createUsers`, data)
       // console.log('ข้อมูลหลังยิง', res)
       await context.commit('SetCreateUser', res.data)
@@ -130,9 +144,9 @@ const ModuleApi = {
       var data = {
         table: 'provinces'
       }
-      console.log('ก่อนยิง จังหวัด', data)
+      // console.log('ก่อนยิง จังหวัด', data)
       var res = await axios.post(`${process.env.VUE_APP_API}/getMasterBytable`, data)
-      console.log('หลังยิงจังหวัด', res)
+      // console.log('หลังยิงจังหวัด', res)
       context.commit('SetGetListProvince', res.data)
     },
     async GetListDistrict (context, val) {
@@ -158,7 +172,7 @@ const ModuleApi = {
       context.commit('SetEditListService', res.data)
     },
     async DeleteListService (context, val) {
-      console.log('ก่อนยิง api delete', val)
+      // console.log('ก่อนยิง api delete', val)
       var res = await axios.post(`${process.env.VUE_APP_API}/delete`, val)
       context.commit('SetDeleteListService', res.data)
     }

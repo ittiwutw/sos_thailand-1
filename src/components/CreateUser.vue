@@ -80,7 +80,7 @@
             </a-col>
           </a-row>
           <a-row type="flex" class="mb-5" v-if="userType === 'SUPERADMIN'">
-            <a-col :md="4" :xs="8" class="mt-2">
+            <a-col :md="4" :xs="8" class="mt-2" v-if="(SelectArea === 'เขต' || SelectArea === 'เเขวง' || SelectArea === 'จังหวัด') ">
               <span>เขตพื้นที่รับผิดชอบ : </span>
             </a-col>
             <a-col :md='14' :xs="16">
@@ -89,7 +89,7 @@
                 <a-col :span='24' class="mt-5"><addressinput-district label="" placeholder="อำเภอ/เขต"  v-model="district" /></a-col>
                 <a-col :span='24' class="mt-5"><addressinput-province label="" placeholder="จังหวัด"  v-model="province" /></a-col> -->
                 <a-col :span='24'>
-                  <v-autocomplete outlined dense :items="ListProvince" v-model="province" item-text="name_th" item-value="name_th" placeholder="จังหวัด" :rules="Rules.province"></v-autocomplete>
+                  <v-autocomplete v-if="(SelectArea === 'เขต' || SelectArea === 'เเขวง' || SelectArea === 'จังหวัด') " outlined dense :items="ListProvince" v-model="province" item-text="name_th" item-value="name_th" placeholder="จังหวัด" :rules="Rules.province"></v-autocomplete>
                 </a-col>
                 <a-col :span='24'>
                   <v-autocomplete v-if="(SelectArea === 'เขต' || SelectArea === 'เเขวง') " outlined dense :items="ListDistrict" v-model="district" item-text="name_th" item-value="name_th" placeholder="เขต/อำเภอ" :rules="Rules.district"></v-autocomplete>
@@ -186,8 +186,8 @@ export default {
       Listarea: [
         { name: 'เเขวง', key: '1' },
         { name: 'เขต', key: '2' },
-        { name: 'จังหวัด', key: '3' }
-        // { name: 'ระดับประเทศ', key: '4' }
+        { name: 'จังหวัด', key: '3' },
+        { name: 'ระดับประเทศ', key: '4' }
       ],
       ListProvince: [],
       ListDistrict: [],
@@ -251,7 +251,7 @@ export default {
     this.$EventBus.$emit('StatusHeader', this.Header)
     var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
     this.userType = user.userType
-    // console.log('User Tbnoung', user)
+    console.log('User Tbnoung', user)
     if (this.Header === 'เเก้ไขผู้ใช้งาน') {
       if (user.adminAreaType === 'SUBDISTRICT') {
         this.SelectArea = 'เเขวง'
@@ -259,9 +259,11 @@ export default {
       } else if (user.adminAreaType === 'DISTRICT') {
         this.SelectArea = 'เขต'
         this.district = user.adminResponsibilityArea
-      } else {
+      } else if (user.adminAreaType === 'PROVINCE') {
         this.SelectArea = 'จังหวัด'
         this.province = user.adminResponsibilityArea
+      } else if (user.adminAreaType === 'ALL') {
+        this.SelectArea = 'ระดับประเทศ'
       }
       this.email = user.email
       this.name = user.name
@@ -398,15 +400,18 @@ export default {
     async CreateUser () {
       var adminAreaType = ''
       var CheckArea = ''
-      if (this.SelectArea === '1') {
+      if (this.SelectArea === 'เเขวง') {
         adminAreaType = 'SUBDISTRICT'
         CheckArea = this.subdistrict
-      } else if (this.SelectArea === '2') {
+      } else if (this.SelectArea === 'เขต') {
         adminAreaType = 'DISTRICT'
         CheckArea = this.district
-      } else {
+      } else if (this.SelectArea === 'จังหวัด') {
         adminAreaType = 'PROVINCE'
         CheckArea = this.province
+      } else {
+        adminAreaType = 'ALL'
+        CheckArea = ''
       }
       var data = {
         email: this.email,
@@ -454,15 +459,18 @@ export default {
       var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
       var adminAreaType = ''
       var CheckArea = ''
-      if (this.SelectArea === '1') {
+      if (this.SelectArea === 'เเขวง') {
         adminAreaType = 'SUBDISTRICT'
         CheckArea = this.subdistrict
-      } else if (this.SelectArea === '2') {
+      } else if (this.SelectArea === 'เขต') {
         adminAreaType = 'DISTRICT'
         CheckArea = this.district
-      } else {
+      } else if (this.SelectArea === 'จังหวัด') {
         adminAreaType = 'PROVINCE'
         CheckArea = this.province
+      } else if (this.SelectArea === 'ระดับประเทศ') {
+        adminAreaType = 'ALL'
+        CheckArea = ''
       }
       if (user.userType === 'SUPERADMIN') {
         user.adminProvince = this.province

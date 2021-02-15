@@ -42,6 +42,7 @@ export default {
   async created () {
     this.$EventBus.$emit('StatusHeader', 'รายงานการเเจ้งเหตุ')
     var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
+    // console.log('user หน้า report', user)
     this.Username = user.name
     this.Email = user.email
     this.Location = user.adminCompanyName
@@ -56,6 +57,8 @@ export default {
     } else if (user.adminAreaType === 'DISTRICT') {
       send.type = 'District'
       send.area = user.adminDistrict
+    } else if (user.adminAreaType === 'ALL') {
+      send.type = 'ALL'
     }
     await this.$store.dispatch('GetReport', send)
     var data = this.$store.state.ModuleApi.DataReport

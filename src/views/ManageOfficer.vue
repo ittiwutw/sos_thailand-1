@@ -4,7 +4,7 @@
       <a-col :xs="24" :md="20" class="mt-5 mb-5">
         <span class="headline">Manage Officer Section</span>
       </a-col>
-      <a-col :xs="24" :md="20" class="mb-3">
+      <a-col :xs="24" :md="20" class="mb-3" v-if="DisableCreate !== 'ALL'">
         <a-row type="flex">
           <a-button type="primary" @click="CreateOfficer">สร้างเจ้าหน้าที่</a-button>
         </a-row>
@@ -25,7 +25,8 @@ export default {
   data () {
     return {
       StatusApi: true,
-      DataTable: []
+      DataTable: [],
+      DisableCreate: ''
     }
   },
 
@@ -33,6 +34,7 @@ export default {
     this.$EventBus.$emit('StatusHeader', 'Manage Officer Section')
     var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
     // console.log('Manage Office =', user)
+    this.DisableCreate = user.adminAreaType
     await this.$store.dispatch('GetUserOfficer', user.adminCompanyName)
     var data = this.$store.state.ModuleApi.DataUserOfficer
     data.data.forEach((element, index) => {

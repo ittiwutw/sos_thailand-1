@@ -57,6 +57,8 @@ export default {
     } else if (user.adminAreaType === 'DISTRICT') {
       send.type = 'District'
       send.area = user.adminDistrict
+    } else {
+      send.type = 'ALL'
     }
     await this.$store.dispatch('GetHistory', send)
     var data = this.$store.state.ModuleApi.DataHistory
