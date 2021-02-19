@@ -65,7 +65,7 @@ export default {
   },
   watch: {
     props (val) {
-      // console.log('prop user', val)
+      // // console.log('prop user', val)
       if (this.$router.currentRoute.name === 'ManageService') {
         this.route = 'ManageService'
         this.props.adminDistrict = val.serviceDistrict

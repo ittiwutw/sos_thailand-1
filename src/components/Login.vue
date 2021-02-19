@@ -63,7 +63,7 @@ export default {
       }
       await this.$store.dispatch('Login', data)
       var ResultLogin = await this.$store.state.ModuleApi.DataLogin
-      // console.log('ResultLogin', ResultLogin)
+      // // console.log('ResultLogin', ResultLogin)
       if (ResultLogin.response_description === 'SUCCESS') {
         var user = ResultLogin.data
         localStorage.setItem('user', Encode.encode(user))

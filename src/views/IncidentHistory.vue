@@ -46,7 +46,7 @@ export default {
     this.Email = user.email
     this.Location = user.adminCompanyName
     this.Area = user.adminProvince
-    // console.log('ก่อนยิง API get History', user)
+    // // // // console.log('ก่อนยิง API get History', user)
     var send = {}
     if (user.adminAreaType === 'PROVINCE') {
       send.type = 'Province'

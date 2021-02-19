@@ -74,15 +74,15 @@ const ModuleApi = {
   },
   actions: {
     async Login (context, val) {
-      // console.log('ข้อมูลที่ยิง api login', val)
+      // // console.log('ข้อมูลที่ยิง api login', val)
       var res = await axios.post(`${process.env.VUE_APP_API}/login`, val)
-      // console.log('ข้อมูลหลังยิง api login', res)
+      // // console.log('ข้อมูลหลังยิง api login', res)
       context.commit('SetDataLogin', res.data)
     },
     async GetUserOfficer (context, val) {
-      // console.log('ก่อนยิง api path =', `${process.env.VUE_APP_API}/getAllUserByCompanyName?adminCompanyName=${val}`)
+      // // console.log('ก่อนยิง api path =', `${process.env.VUE_APP_API}/getAllUserByCompanyName?adminCompanyName=${val}`)
       var res = await axios.get(`${process.env.VUE_APP_API}/getAllUserByCompanyName?adminCompanyName=${val}`)
-      // console.log('adminCompanyName', res)
+      // // console.log('adminCompanyName', res)
       context.commit('SetDataUserOfficer', res.data)
     },
     async GetListService (context) {
@@ -90,7 +90,7 @@ const ModuleApi = {
         table: 'serviceType'
       }
       var res = await axios.post(`${process.env.VUE_APP_API}/getMasterByTable`, data)
-      // console.log('GetListService ==', res)
+      // // console.log('GetListService ==', res)
       context.commit('SetGetListService', res.data)
     },
     async GetUserAdmin (context) {
@@ -130,13 +130,13 @@ const ModuleApi = {
       context.commit('SetDataHistory', res.data)
     },
     async CreateUser (context, data) {
-      // console.log('ก่อนยิงสร้าง user api', data)
+      // // console.log('ก่อนยิงสร้าง user api', data)
       var res = await axios.post(`${process.env.VUE_APP_API}/createUsers`, data)
-      // console.log('ข้อมูลหลังยิง', res)
+      // // console.log('ข้อมูลหลังยิง', res)
       await context.commit('SetCreateUser', res.data)
     },
     async EditUser (context, data) {
-      // console.log('ก่อนยิง api Edit', data)
+      // // console.log('ก่อนยิง api Edit', data)
       var res = await axios.post(`${process.env.VUE_APP_API}/updateUser`, data)
       await context.commit('SetEditUser', res.data)
     },
@@ -144,9 +144,9 @@ const ModuleApi = {
       var data = {
         table: 'provinces'
       }
-      // console.log('ก่อนยิง จังหวัด', data)
+      // // console.log('ก่อนยิง จังหวัด', data)
       var res = await axios.post(`${process.env.VUE_APP_API}/getMasterBytable`, data)
-      // console.log('หลังยิงจังหวัด', res)
+      // // console.log('หลังยิงจังหวัด', res)
       context.commit('SetGetListProvince', res.data)
     },
     async GetListDistrict (context, val) {

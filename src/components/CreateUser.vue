@@ -44,7 +44,7 @@
               <span>โทรศัพท์ : </span>
             </a-col>
             <a-col :md='14' :xs="16">
-              <v-text-field outlined dense v-model="tel" placeholder="เบอร์โทรศัพท์" :rules="Rules.tel"></v-text-field>
+              <v-text-field outlined dense v-model="tel" maxlength="10" placeholder="เบอร์โทรศัพท์" :rules="Rules.tel"></v-text-field>
             </a-col>
           </a-row>
           <a-row type="flex" v-if="userType === 'SUPERADMIN'">
@@ -219,7 +219,8 @@ export default {
         ],
         tel: [
           (v) => !!v || 'กรุณากรอกข้อมูล',
-          (v) => /^([0-9])+$/.test(v) || 'กรุณาระบุตัวเลข'
+          (v) => /^([0-9])+$/.test(v) || 'กรุณาระบุตัวเลข',
+          (v) => (v.length >= 10) || 'กรุณาระบุตัวเลข 10 ตัวอักษร'
           // (v) => (v.length >= 9) || 'รหัสผ่านต้องมีอย่างน้อย 9 ตัวอักษร'
         ]
       }
@@ -251,7 +252,7 @@ export default {
     this.$EventBus.$emit('StatusHeader', this.Header)
     var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
     this.userType = user.userType
-    console.log('User Tbnoung', user)
+    // console.log('User Tbnoung', user)
     if (this.Header === 'เเก้ไขผู้ใช้งาน') {
       if (user.adminAreaType === 'SUBDISTRICT') {
         this.SelectArea = 'เเขวง'
@@ -273,9 +274,10 @@ export default {
       this.subdistrict = user.adminSubDistrict
       this.district = user.adminDistrict
       this.province = user.adminProvince
-      if (user.logoImg !== '' || user.logoImg !== null) {
+      if (user.logoImg !== 'null') {
         this.Imageurl = user.logoImg
       }
+      // console.log('Imageurl', this.Imageurl)
       // this.area = user.area
       this.tel = user.tel
       this.GetListProvince()
@@ -427,10 +429,10 @@ export default {
         adminSubDistrict: this.subdistrict,
         adminCompanyName: this.location
       }
-      console.log('data ก่อนสร้าง user', data)
+      // console.log('data ก่อนสร้าง user', data)
       await this.$store.dispatch('CreateUser', data)
       var res = this.$store.state.ModuleApi.CreateUser
-      console.log('ข้อมูลหลังสร้าง user', res)
+      // console.log('ข้อมูลหลังสร้าง user', res)
       if (res.response_code === 'SUCCESS') {
         this.$swal({
           icon: 'success',
@@ -492,7 +494,7 @@ export default {
       }
       await this.$store.dispatch('EditUser', user)
       var res = this.$store.state.ModuleApi.EditUser
-      // console.log('res หลังยิง', res)
+      // // console.log('res หลังยิง', res)
       if (res.response_code === '0000') {
         this.$swal({
           icon: 'success',

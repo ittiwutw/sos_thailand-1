@@ -85,7 +85,7 @@ export default {
   },
   watch: {
     props (val) {
-      // console.log('Open-------->>>', val)
+      // // // console.log('Open-------->>>', val)
       if (val.sosImgs !== 'undefined') {
         this.Img = JSON.parse(val.sosImgs)[0]
       }

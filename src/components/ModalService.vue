@@ -51,7 +51,7 @@ export default {
       }
       await this.$store.dispatch('CreateListService', data)
       var res = this.$store.state.ModuleApi.CreateListService
-      console.log('res CreateList Service', res)
+      // console.log('res CreateList Service', res)
       if (res.response_description === 'SUCCESS') {
         this.$swal({
           icon: 'success',
@@ -77,7 +77,7 @@ export default {
       }
       await this.$store.dispatch('EditListService', data)
       var res = this.$store.state.ModuleApi.EditListService
-      console.log('res CreateList Service', res)
+      // console.log('res CreateList Service', res)
       if (res.response_description === 'SUCCESS') {
         this.$swal({
           icon: 'success',

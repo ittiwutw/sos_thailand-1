@@ -72,13 +72,14 @@ export default {
     }
   },
   created () {
-    // console.log('เข้า create home page')
+    // // console.log('เข้า create home page')
     this.$EventBus.$on('StatusHeader', (val) => {
       this.CheckHeader(val)
     })
     var checkuser = JSON.parse(Decode.decode(localStorage.getItem('user')))
     this.username = checkuser.name
-    if (checkuser.logoImg === '' || checkuser.logoImg === null) {
+    // console.log('checkuser', checkuser)
+    if (checkuser.logoImg === '' || checkuser.logoImg === 'null') {
       this.picture = 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png'
     } else {
       this.picture = checkuser.logoImg
@@ -96,8 +97,8 @@ export default {
   },
   methods: {
     async ChangePage (val) {
-      // console.log('เข้า ChangePage', val)
-      // console.log(val, this.$router.currentRoute)
+      // // console.log('เข้า ChangePage', val)
+      // // console.log(val, this.$router.currentRoute)
       if (val.name !== this.$router.currentRoute.name) {
         this.$router.push({ path: val.path }).catch(() => {})
       }

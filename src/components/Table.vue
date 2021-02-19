@@ -68,7 +68,7 @@ export default {
     }
   },
   created () {
-    // console.log('this.props', this.props)
+    // // console.log('this.props', this.props)
   },
   watch: {
     props (val) {
@@ -87,7 +87,7 @@ export default {
         }
       })
       this.DataTable = data
-      // console.log('DataTable', this.DataTable)
+      // // console.log('DataTable', this.DataTable)
     },
     async detail (val) {
       this.PropModal = val
@@ -103,7 +103,7 @@ export default {
       var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
       await this.$store.dispatch('GetUserOfficer', user.adminCompanyName)
       var data = this.$store.state.ModuleApi.DataUserOfficer.data
-      // console.log('data officer =', data)
+      // // console.log('data officer =', data)
       this.SetDataTable(data)
     }
   }
