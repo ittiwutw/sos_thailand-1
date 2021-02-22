@@ -39,6 +39,7 @@ export default {
       this.$EventBus.$emit('GetService')
     },
     Create () {
+      console.log(this.type)
       if (this.type === 'เพิ่มประเภทให้บริการ') {
         this.CreateListService()
       } else if (this.type === 'เเก้ไขประเภทให้บริการ') {
@@ -55,7 +56,7 @@ export default {
       if (res.response_description === 'SUCCESS') {
         this.$swal({
           icon: 'success',
-          text: 'เเก้ไขประเภทให้บริการสำเร็จ',
+          text: 'เพิ่มประเภทให้บริการสำเร็จ',
           showConfirmButton: false,
           timer: 2000
         })
@@ -64,7 +65,7 @@ export default {
       } else {
         this.$swal({
           icon: 'erroe',
-          text: 'เเก้ไขประเภทให้บริการไม่สำเร็จ',
+          text: 'เพิ่มประเภทให้บริการไม่สำเร็จ',
           showConfirmButton: false,
           timer: 2000
         })

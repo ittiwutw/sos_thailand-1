@@ -173,7 +173,8 @@ const ModuleApi = {
     },
     async DeleteListService (context, val) {
       // console.log('ก่อนยิง api delete', val)
-      var res = await axios.post(`${process.env.VUE_APP_API}/delete`, val)
+      var res = await axios.post(`${process.env.VUE_APP_API}/deleteMaster`, val)
+      console.log('delete ===', res)
       context.commit('SetDeleteListService', res.data)
     }
   }

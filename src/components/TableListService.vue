@@ -75,11 +75,17 @@ export default {
       this.$store.commit('SetModalListService')
     },
     async Delete (val) {
+      // var data = {
+      //   serviceTypeId: val.serviceTypeId
+      // }
       var data = {
-        serviceTypeId: val.serviceTypeId
+        serviceTypeId: val.serviceTypeId,
+        tableName: 'serviceType',
+        where: `serviceTypeId = ${val.serviceTypeId}`
       }
-      this.$store.dispatch('DeleteListService', data)
-      var res = this.$store.state.ModuleApi.DeleteListService
+      await this.$store.dispatch('DeleteListService', data)
+      var res = await this.$store.state.ModuleApi.DeleteListService
+      console.log('res delete', res)
       if (res.response_description === 'SUCCESS') {
         this.$swal({
           icon: 'success',
