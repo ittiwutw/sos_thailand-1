@@ -19,8 +19,10 @@
                 <span>{{props.tel}}</span>
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
-                <span>เขต :</span>
-                <span>{{props.adminDistrict}}</span>
+                <span>พื้นที่รับผิดชอบ :</span>
+                <span v-if="props.adminAreaType === 'PROVINCE'">{{props.adminProvince}}</span>
+                <span v-else-if="props.adminAreaType === 'DISTRICT'">{{props.adminDistrict}}</span>
+                <span v-else>{{props.adminSubDistrict}}</span>
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
                 <span>อีเมล์ :</span>
@@ -65,7 +67,7 @@ export default {
   },
   watch: {
     props (val) {
-      // // console.log('prop user', val)
+      console.log('prop user', val)
       if (this.$router.currentRoute.name === 'ManageService') {
         this.route = 'ManageService'
         this.props.adminDistrict = val.serviceDistrict

@@ -41,6 +41,9 @@ export default {
       element.num = index + 1
       this.DataTable.push(element)
     })
+    console.log(this.DataTable)
+    this.DataTable.splice(0, 1)
+    console.log(this.DataTable)
     this.StatusApi = false
   },
   methods: {

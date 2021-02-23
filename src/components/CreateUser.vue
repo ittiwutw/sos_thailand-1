@@ -85,9 +85,6 @@
             </a-col>
             <a-col :md='14' :xs="16">
               <a-row type="flex" :gutter="[16,0]">
-                <!-- <a-col :span='24'><addressinput-subdistrict label="" placeholder="ตำบล/เเขวง"  v-model="subdistrict" /></a-col>
-                <a-col :span='24' class="mt-5"><addressinput-district label="" placeholder="อำเภอ/เขต"  v-model="district" /></a-col>
-                <a-col :span='24' class="mt-5"><addressinput-province label="" placeholder="จังหวัด"  v-model="province" /></a-col> -->
                 <a-col :span='24'>
                   <v-autocomplete v-if="(SelectArea === 'เขต' || SelectArea === 'เเขวง' || SelectArea === 'จังหวัด') " outlined dense :items="ListProvince" v-model="province" item-text="name_th" item-value="name_th" placeholder="จังหวัด" :rules="Rules.province"></v-autocomplete>
                 </a-col>
@@ -101,7 +98,7 @@
             </a-col>
           </a-row>
           <a-row type="flex" class="mb-5" v-else>
-            <a-col :md="4" :xs="8" class="mt-2">
+            <!-- <a-col :md="4" :xs="8" class="mt-2">
               <span>เขตพื้นที่รับผิดชอบ : </span>
             </a-col>
             <a-col :md='14' :xs="16">
@@ -116,7 +113,7 @@
                   <v-text-field outlined dense v-model="subdistrict"  placeholder="เเขวง/ตำบล" disabled></v-text-field>
                 </a-col>
               </a-row>
-            </a-col>
+            </a-col> -->
           </a-row>
           <a-row type="flex" class="mb-5">
             <a-col :md="4" :xs="8" >
@@ -293,15 +290,16 @@ export default {
         this.subdistrict = user.adminSubDistrict
         this.district = user.adminDistrict
         this.province = user.adminProvince
+        console.log('user====', user)
         if (user.adminAreaType === 'SUBDISTRICT') {
           this.SelectArea = 'เเขวง'
-          this.subdistrict = user.adminResponsibilityArea
+          this.subdistrict = user.adminSubDistrict
         } else if (user.adminAreaType === 'DISTRICT') {
           this.SelectArea = 'เขต'
-          this.district = user.adminResponsibilityArea
+          this.district = user.adminDistrict
         } else {
           this.SelectArea = 'จังหวัด'
-          this.province = user.adminResponsibilityArea
+          this.province = user.adminProvince
         }
       } else {
         this.userType = user.userType
