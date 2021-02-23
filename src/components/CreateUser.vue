@@ -295,7 +295,6 @@ export default {
         this.subdistrict = user.adminSubDistrict
         this.district = user.adminDistrict
         this.province = user.adminProvince
-        console.log('user====', user)
         if (user.adminAreaType === 'SUBDISTRICT') {
           this.SelectArea = 'เเขวง'
           this.subdistrict = user.adminSubDistrict
@@ -307,24 +306,24 @@ export default {
           this.province = user.adminProvince
         }
       } else {
-        console.log('เข้า else', user)
+        // console.log('เข้า else', user)
         this.userType = user.userType
         this.email = ''
         this.password = ''
         this.job = ''
         this.area = ''
         this.tel = ''
-        this.location = user.adminCompanyName
-        if (user.adminAreaType === 'SUBDISTRICT') {
-          this.SelectArea = 'เเขวง'
-          this.subdistrict = user.adminSubDistrict
-        } else if (user.adminAreaType === 'DISTRICT') {
-          this.SelectArea = 'เขต'
-          this.district = user.adminDistrict
-        } else {
-          this.SelectArea = 'จังหวัด'
-          this.province = user.adminProvince
-        }
+        // this.location = user.adminCompanyName
+        // if (user.adminAreaType === 'SUBDISTRICT') {
+        //   this.SelectArea = 'เเขวง'
+        //   this.subdistrict = user.adminSubDistrict
+        // } else if (user.adminAreaType === 'DISTRICT') {
+        //   this.SelectArea = 'เขต'
+        //   this.district = user.adminDistrict
+        // } else {
+        //   this.SelectArea = 'จังหวัด'
+        //   this.province = user.adminProvince
+        // }
         this.GetListProvince()
       }
     }
