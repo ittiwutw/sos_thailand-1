@@ -62,7 +62,6 @@ export default {
   methods: {
     async detail (val) {
       this.PropModal = val
-      // // console.log('PropModal', this.PropModal)
       await this.$store.commit('SetModal')
     },
     GoogleMap (val) {

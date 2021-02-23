@@ -85,8 +85,9 @@ export default {
   },
   watch: {
     props (val) {
-      // // // console.log('Open-------->>>', val)
-      if (val.sosImgs !== 'undefined') {
+      console.log('Open-------->>>', val)
+      if ((val.sosImgs !== '')) {
+        console.log('inc')
         this.Img = JSON.parse(val.sosImgs)[0]
       }
       this.Username = val.userReqName

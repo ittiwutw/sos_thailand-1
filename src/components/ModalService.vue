@@ -1,22 +1,98 @@
 <template>
   <div>
-    <v-dialog v-model="OpenModal" width="45%" persistent>
+    <v-dialog v-model="Modal" width="45%" persistent>
       <v-card>
-        <v-card-title class="headline grey lighten-2">{{type}}</v-card-title>
+        <v-card-title class="headline grey lighten-2">รายละเอียดผู้ให้บริการ</v-card-title>
         <v-card-text>
           <a-row type="flex">
-            <a-col :span='6'>
-              <a-row type="flex" class="mt-13" justify="center">
-                <span>ประเภทให้บริการ</span>
+            <a-col :span='12'>
+              <a-row type="flex" class="ma-5" justify="space-between">
+                <span>ชื่อ :</span>
+                <span>{{props.name}}</span>
+              </a-row>
+              <a-row type="flex" class="ma-5" justify="space-between">
+                <span>อาชีพ :</span>
+                <span>{{props.job}}</span>
+              </a-row>
+              <a-row type="flex" class="ma-5" justify="space-between">
+                <span>หมายเลขโทรศัพท์ :</span>
+                <span>{{props.tel}}</span>
+              </a-row>
+              <a-row type="flex" class="ma-5" justify="space-between">
+                <span>อีเมล์ :</span>
+                <span>{{props.email}}</span>
+              </a-row>
+              <a-row type="flex" class="ma-5" justify="space-between">
+                <span>พื้นที่ให้บริการ :</span>
+                <span>{{props.serviceSubDistrict}}</span>
+                <!-- <span v-if="props.adminAreaType === 'PROVINCE'">{{props.adminProvince}}</span>
+                <span v-else-if="props.adminAreaType === 'DISTRICT'">{{props.adminDistrict}}</span>
+                <span v-else>{{props.adminSubDistrict}}</span> -->
+              </a-row>
+              <a-row type="flex" class="ma-5" justify="end">
+                <span>{{props.serviceDistrict}}</span>
+              </a-row>
+              <a-row type="flex" class="ma-5" justify="end">
+                <span>{{props.serviceProvince}}</span>
+              </a-row>
+              <a-row type="flex" class="ma-5" justify="space-between">
+                <span>คะเเนน :</span>
+                <!-- <span>{{props.ratingPoint[0]}}</span> -->
               </a-row>
             </a-col>
-            <a-col :span="16" class="mt-10">
-              <v-text-field outlined dense v-model="data.serviceTypeName" placeholder="ชื่อประเภทให้บริการ"></v-text-field>
+            <a-col :span='12'>
+              <a-row type="flex" justify="center" class="mt-3">
+              <span>รูปภาพโปรไฟล์</span>
+              </a-row>
+              <a-card class="mt-2" v-if="(props.logoImg !== null || props.logoImg !== '')">
+                <v-img height="300px" :src="props.profileImgUrl" />
+              </a-card>
+              <a-card class="mt-2" v-else>
+                <img width="100%" src="@/assets/logo_sos.png" />
+              </a-card>
+            </a-col>
+            <a-col :span='8' class="mt-10">
+              <a-row type="flex" justify="center">
+              <span>รูปภาพบัตรประชาชน</span>
+              </a-row>
+              <a-card class="mt-2" v-if="(props.idCardImg !== null || props.idCardImg !== '')">
+                <a-row type="flex" justify="center">
+                <v-img height="150" width="150" :src="props.idCardImg" />
+                </a-row>
+              </a-card>
+              <a-card class="mt-2" v-else>
+                <img width="100%" src="@/assets/logo_sos.png" />
+              </a-card>
+            </a-col>
+            <a-col :span='8' class="mt-10">
+              <a-row type="flex" justify="center">
+              <span>รูปภาพใบขับขี่</span>
+              </a-row>
+              <a-card class="mt-2" v-if="(props.driverLicenseImg !== null || props.driverLicenseImg !== '')">
+                <a-row type="flex" justify="center">
+                <v-img height="150" width="150" :src="props.driverLicenseImg" />
+                </a-row>
+              </a-card>
+              <a-card class="mt-2" v-else>
+                <img width="100%" src="@/assets/logo_sos.png" />
+              </a-card>
+            </a-col>
+            <a-col :span='8' class="mt-10">
+              <a-row type="flex" justify="center">
+              <span>รูปภาพใบประกอบวิชาชีพ</span>
+              </a-row>
+              <a-card class="mt-2" v-if="(props.licenseImg !== null || props.licenseImg !== '')">
+                <a-row type="flex" justify="center">
+                <v-img height="150" width="150" :src="props.licenseImg" />
+                </a-row>
+              </a-card>
+              <a-card class="mt-2" v-else>
+                <img width="100%" src="@/assets/logo_sos.png" />
+              </a-card>
             </a-col>
             <a-col :span="24" class="mt-5">
               <a-row type="flex" justify="end">
-                <a-button @click="Close">ปิด</a-button>
-                <a-button type="primary" class="ml-5" @click="Create">บันทึก</a-button>
+                <a-button type="primary" @click="CloseModal">ปิด</a-button>
               </a-row>
             </a-col>
           </a-row>
@@ -27,75 +103,29 @@
 </template>
 <script>
 export default {
-  props: ['type', 'data'],
+  props: ['props'],
+  data () {
+    return {
+      route: ''
+    }
+  },
   computed: {
-    OpenModal () {
-      return this.$store.state.ModuleApi.ModalListService
+    Modal () {
+      return this.$store.state.ModuleApi.Modal
+    }
+  },
+  watch: {
+    props (val) {
+      console.log('prop user', val)
+      if (this.$router.currentRoute.name === 'ManageService') {
+        this.route = 'ManageService'
+        this.props.adminDistrict = val.serviceDistrict
+      }
     }
   },
   methods: {
-    Close () {
-      this.$store.commit('SetModalListService')
-      this.$EventBus.$emit('GetService')
-    },
-    Create () {
-      console.log(this.type)
-      if (this.type === 'เพิ่มประเภทให้บริการ') {
-        this.CreateListService()
-      } else if (this.type === 'เเก้ไขประเภทให้บริการ') {
-        this.EditListService()
-      }
-    },
-    async CreateListService () {
-      var data = {
-        serviceTypeName: this.data.serviceTypeName
-      }
-      await this.$store.dispatch('CreateListService', data)
-      var res = this.$store.state.ModuleApi.CreateListService
-      // console.log('res CreateList Service', res)
-      if (res.response_description === 'SUCCESS') {
-        this.$swal({
-          icon: 'success',
-          text: 'เพิ่มประเภทให้บริการสำเร็จ',
-          showConfirmButton: false,
-          timer: 2000
-        })
-        this.$store.commit('SetModalListService')
-        this.$EventBus.$emit('GetService')
-      } else {
-        this.$swal({
-          icon: 'erroe',
-          text: 'เพิ่มประเภทให้บริการไม่สำเร็จ',
-          showConfirmButton: false,
-          timer: 2000
-        })
-      }
-    },
-    async EditListService () {
-      var data = {
-        serviceTypeId: this.data.serviceTypeId,
-        serviceTypeName: this.data.serviceTypeName
-      }
-      await this.$store.dispatch('EditListService', data)
-      var res = this.$store.state.ModuleApi.EditListService
-      // console.log('res CreateList Service', res)
-      if (res.response_description === 'SUCCESS') {
-        this.$swal({
-          icon: 'success',
-          text: 'สร้างประเภทให้บริการสำเร็จ',
-          showConfirmButton: false,
-          timer: 2000
-        })
-        this.$store.commit('SetModalListService')
-        this.$EventBus.$emit('GetService')
-      } else {
-        this.$swal({
-          icon: 'error',
-          text: 'สร้างประเภทให้บริการไม่สำเร็จ',
-          showConfirmButton: false,
-          timer: 2000
-        })
-      }
+    CloseModal () {
+      this.$store.commit('SetModal')
     }
   }
 }

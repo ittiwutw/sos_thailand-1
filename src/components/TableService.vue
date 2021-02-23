@@ -39,7 +39,7 @@
 <script>
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
-import Modal from '@/components/ModalUser'
+import Modal from '@/components/ModalService'
 export default {
   components: {
     Modal,

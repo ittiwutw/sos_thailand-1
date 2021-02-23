@@ -34,8 +34,8 @@
               </a-row>
             </a-col>
             <a-col :span='12'>
-              <a-card class="mt-2" v-if="props.logoImg !== null || props.logoImg !== ''">
-                <img width="100%" :src="props.logoImg" />
+              <a-card class="mt-2" v-if="(props.adminCardImg !== null || props.adminCardImg !== '')">
+                <v-img height="300px" :src="props.adminCardImg" />
               </a-card>
               <a-card class="mt-2" v-else>
                 <img width="100%" src="@/assets/logo_sos.png" />
