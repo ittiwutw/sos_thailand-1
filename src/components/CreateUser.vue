@@ -224,6 +224,11 @@ export default {
     }
   },
   watch: {
+    SelectArea (val) {
+      this.subdistrict = ''
+      this.district = ''
+      this.province = ''
+    },
     province (val) {
       if (this.ListProvince.length !== 0) {
         if (this.StateCreate !== 'OFFICER') {
@@ -302,12 +307,24 @@ export default {
           this.province = user.adminProvince
         }
       } else {
+        console.log('เข้า else', user)
         this.userType = user.userType
         this.email = ''
         this.password = ''
         this.job = ''
         this.area = ''
         this.tel = ''
+        this.location = user.adminCompanyName
+        if (user.adminAreaType === 'SUBDISTRICT') {
+          this.SelectArea = 'เเขวง'
+          this.subdistrict = user.adminSubDistrict
+        } else if (user.adminAreaType === 'DISTRICT') {
+          this.SelectArea = 'เขต'
+          this.district = user.adminDistrict
+        } else {
+          this.SelectArea = 'จังหวัด'
+          this.province = user.adminProvince
+        }
         this.GetListProvince()
       }
     }
@@ -371,6 +388,7 @@ export default {
         adminSubDistrict: user.adminSubDistrict,
         adminCompanyName: user.adminCompanyName
       }
+      console.log('ก่อนยิง data', data)
       await this.$store.dispatch('CreateUser', data)
       var res = this.$store.state.ModuleApi.CreateUser
       if (res.response_code === 'SUCCESS') {
@@ -418,6 +436,7 @@ export default {
         password: this.password,
         name: this.name,
         tel: this.tel,
+        activeFlag: 1,
         adminAreaType: adminAreaType,
         adminResponsibilityArea: CheckArea,
         logoImg: this.ImageBase64,
@@ -427,7 +446,7 @@ export default {
         adminSubDistrict: this.subdistrict,
         adminCompanyName: this.location
       }
-      // console.log('data ก่อนสร้าง user', data)
+      console.log('data ก่อนสร้าง user', data)
       await this.$store.dispatch('CreateUser', data)
       var res = this.$store.state.ModuleApi.CreateUser
       // console.log('ข้อมูลหลังสร้าง user', res)
