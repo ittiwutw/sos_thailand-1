@@ -4,11 +4,11 @@
       <a-col :xs="24" :md="20" class="mt-5 mb-5">
         <span class="headline">Manage Officer Section</span>
       </a-col>
-      <a-col :xs="24" :md="20" class="mb-3" v-if="DisableCreate !== 'ALL'">
+      <!-- <a-col :xs="24" :md="20" class="mb-3" v-if="DisableCreate !== 'ALL'">
         <a-row type="flex">
           <a-button type="primary" @click="CreateOfficer">สร้างเจ้าหน้าที่</a-button>
         </a-row>
-      </a-col>
+      </a-col> -->
       <a-col :span='24'>
         <Table :props="DataTable" :StatusApi="StatusApi" />
       </a-col>

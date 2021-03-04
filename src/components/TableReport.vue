@@ -2,6 +2,13 @@
   <div>
     <loading :active.sync="StatusApi"></loading>
     <a-row type="flex" justify="center">
+      <a-col :span="24" class="mb-5">
+        <a-row type="flex">
+          <a-col :span="7" offset="15">
+            <v-text-field dense hide-details v-model="search" outlined placeholder="ค้นหา"></v-text-field>
+          </a-col>
+        </a-row>
+      </a-col>
       <a-col :xs="24" :md="20">
         <v-card outlined>
             <v-data-table

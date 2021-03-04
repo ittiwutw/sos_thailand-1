@@ -2,6 +2,17 @@
   <div>
     <loading :active.sync="StatusApi"></loading>
     <a-row type="flex" justify="center">
+      <a-col :span="24" class="mb-5">
+        <a-row type="flex">
+          <a-col :span="5" class="mb-3" offset="2">
+              <a-button type="primary" @click="CreateOfficer" v-if="StatusUser === 'ADMIN'">สร้างเจ้าหน้าที่</a-button>
+              <a-button type="primary" @click="CreateAdmin" v-else>สร้างแอดมิน</a-button>
+          </a-col>
+          <a-col :span="7" offset="8">
+            <v-text-field dense hide-details v-model="search" outlined placeholder="ค้นหา"></v-text-field>
+          </a-col>
+        </a-row>
+      </a-col>
       <a-col :xs="24" :md="20">
         <v-card outlined>
             <v-data-table
@@ -49,6 +60,7 @@ export default {
   props: ['props', 'StatusApi'],
   data () {
     return {
+      StatusUser: 'ADMIN',
       PropModal: '',
       DataTable: [],
       pageCount: 10,
@@ -68,7 +80,9 @@ export default {
     }
   },
   created () {
-    // // console.log('this.props', this.props)
+    var checkuser = JSON.parse(Decode.decode(localStorage.getItem('user')))
+    // console.log('this.props', checkuser)
+    this.StatusUser = checkuser.userType
   },
   watch: {
     props (val) {
@@ -76,6 +90,12 @@ export default {
     }
   },
   methods: {
+    CreateAdmin () {
+      this.$router.push({ path: '/CreateUser?State=ADMIN' }).catch(() => {})
+    },
+    CreateOfficer () {
+      this.$router.push({ path: '/CreateUser?State=OFFICER' }).catch(() => {})
+    },
     SetDataTable (val) {
       var data = [...val]
       data.forEach((item, index) => {

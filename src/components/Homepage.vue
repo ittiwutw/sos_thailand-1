@@ -78,8 +78,8 @@ export default {
     })
     var checkuser = JSON.parse(Decode.decode(localStorage.getItem('user')))
     this.username = checkuser.name
-    // console.log('checkuser', checkuser)
-    if (checkuser.logoImg === '' || checkuser.logoImg === 'null') {
+    console.log('checkuser', checkuser)
+    if (checkuser.logoImg === '' || checkuser.logoImg === 'null' || checkuser.logoImg === undefined) {
       this.picture = 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png'
     } else {
       this.picture = checkuser.logoImg
