@@ -27,9 +27,15 @@ export default {
       DataTable: []
     }
   },
+  mounted () {
+    this.$EventBus.$on('GetService', this.getListService)
+    this.$on('hook:beforeDestroy', () => {
+      this.$EventBus.$off('GetService')
+    })
+  },
   created () {
     this.$EventBus.$emit('StatusHeader', 'ประเภทการให้บริการ')
-    this.$EventBus.$on('GetService', this.getListService)
+    // this.$EventBus.$on('GetService', this.getListService)
     this.getListService()
   },
   methods: {

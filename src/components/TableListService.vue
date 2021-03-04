@@ -33,7 +33,7 @@
 <script>
 import Loading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
-import Modal from '@/components/ModalService'
+import Modal from '@/components/ModalListService'
 export default {
   props: ['props', 'StatusApi'],
   components: {
@@ -70,6 +70,7 @@ export default {
       this.$store.commit('SetModalListService')
     },
     edit (val) {
+      console.log('val====', val)
       this.dataEdit = val
       this.TypeStatus = 'เเก้ไขประเภทให้บริการ'
       this.$store.commit('SetModalListService')
