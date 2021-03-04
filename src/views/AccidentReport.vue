@@ -47,26 +47,34 @@ export default {
     this.Email = user.email
     this.Location = user.adminCompanyName
     this.Area = user.adminProvince
-    var send = {}
-    if (user.adminAreaType === 'PROVINCE') {
-      send.type = 'Province'
-      send.area = user.adminProvince
-    } else if (user.adminAreaType === 'SUBDISTRICT') {
-      send.type = 'Subdistrict'
-      send.area = user.adminSubDistrict
-    } else if (user.adminAreaType === 'DISTRICT') {
-      send.type = 'District'
-      send.area = user.adminDistrict
-    } else if (user.adminAreaType === 'ALL') {
-      send.type = 'ALL'
+    setInterval(() => {
+      this.GetDataTable()
+    }, 10000)
+  },
+  methods: {
+    async GetDataTable () {
+      var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
+      var send = {}
+      if (user.adminAreaType === 'PROVINCE') {
+        send.type = 'Province'
+        send.area = user.adminProvince
+      } else if (user.adminAreaType === 'SUBDISTRICT') {
+        send.type = 'Subdistrict'
+        send.area = user.adminSubDistrict
+      } else if (user.adminAreaType === 'DISTRICT') {
+        send.type = 'District'
+        send.area = user.adminDistrict
+      } else if (user.adminAreaType === 'ALL') {
+        send.type = 'ALL'
+      }
+      await this.$store.dispatch('GetReport', send)
+      var data = this.$store.state.ModuleApi.DataReport
+      data.data.forEach((element, index) => {
+        element.num = index + 1
+        this.DataTable.push(element)
+      })
+      this.StatusApi = false
     }
-    await this.$store.dispatch('GetReport', send)
-    var data = this.$store.state.ModuleApi.DataReport
-    data.data.forEach((element, index) => {
-      element.num = index + 1
-      this.DataTable.push(element)
-    })
-    this.StatusApi = false
   }
 }
 </script>
