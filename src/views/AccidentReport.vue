@@ -69,6 +69,7 @@ export default {
       }
       await this.$store.dispatch('GetReport', send)
       var data = this.$store.state.ModuleApi.DataReport
+      this.DataTable = []
       data.data.forEach((element, index) => {
         element.num = index + 1
         this.DataTable.push(element)

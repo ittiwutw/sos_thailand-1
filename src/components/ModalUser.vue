@@ -35,7 +35,7 @@
             </a-col>
             <a-col :span='12'>
               <a-card class="mt-2" v-if="(props.adminCardImg !== null || props.adminCardImg !== '')">
-                <v-img height="300px" :src="props.adminCardImg" />
+                <v-img height="300px" :src="props.logoImg" />
               </a-card>
               <a-card class="mt-2" v-else>
                 <img width="100%" src="@/assets/logo_sos.png" />

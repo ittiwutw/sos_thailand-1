@@ -181,8 +181,8 @@ export default {
       Imageurl: '',
       SelectArea: '',
       Listarea: [
-        { name: 'เเขวง', key: '1' },
-        { name: 'เขต', key: '2' },
+        { name: 'เเขวง/ตำบล', key: '1' },
+        { name: 'เขต/อำเภอ', key: '2' },
         { name: 'จังหวัด', key: '3' },
         { name: 'ระดับประเทศ', key: '4' }
       ],
