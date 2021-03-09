@@ -48,8 +48,10 @@ export default {
         // { key: 'manu1', text: 'Manage เจ้าหน้าที่', path: '/', name: 'ManageOfficer' },
         { key: 'manu2', text: 'Manage Service Section', path: '/ManageService', name: 'ManageService' },
         { key: 'manu3', text: 'Manage Area Admin', path: '/ManageAdmin', name: 'ManageAdmin' },
-        { key: 'manu4', text: 'เเก้ไขข้อมูล', path: '/EditUser', name: 'EditUser' },
-        { key: 'manu5', text: 'ประเภทการให้บริการ', path: '/AddService', name: 'AddService' }
+        { key: 'manu4', text: 'รายงานการเเจ้งเหตุ', path: '/Report', name: 'Report' },
+        { key: 'manu5', text: 'ประวัติการเเจ้งเหตุ', path: '/History', name: 'History' },
+        { key: 'manu6', text: 'เเก้ไขข้อมูล', path: '/EditUser', name: 'EditUser' },
+        { key: 'manu7', text: 'ประเภทการให้บริการ', path: '/AddService', name: 'AddService' }
         // { icon: 'mdi-chart-timeline-variant', text: 'ระบบบริหารบุคลากร', child: [{ name: 'Tbnoung' }] }
       ],
       NavigatorAdmin: [
@@ -77,6 +79,7 @@ export default {
       this.CheckHeader(val)
     })
     var checkuser = JSON.parse(Decode.decode(localStorage.getItem('user')))
+    console.log('checkuser', checkuser)
     this.username = checkuser.name
     console.log('checkuser', checkuser)
     if (checkuser.logoImg === '' || checkuser.logoImg === 'null' || checkuser.logoImg === undefined) {

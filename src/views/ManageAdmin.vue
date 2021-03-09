@@ -29,17 +29,23 @@ export default {
   },
   async created () {
     this.$EventBus.$emit('StatusHeader', 'Manage Area Admin')
-    await this.$store.dispatch('GetUserAdmin')
-    var data = this.$store.state.ModuleApi.DataUserAdmin
-    data.data.forEach((element, index) => {
-      element.num = index + 1
-      this.DataTable.push(element)
-    })
-    this.StatusApi = false
+    setInterval(() => {
+      this.GetDataTable()
+    }, 10000)
   },
   methods: {
     CreateAdmin () {
       this.$router.push({ path: '/CreateUser?State=ADMIN' }).catch(() => {})
+    },
+    async GetDataTable () {
+      this.DataTable = []
+      await this.$store.dispatch('GetUserAdmin')
+      var data = this.$store.state.ModuleApi.DataUserAdmin
+      data.data.forEach((element, index) => {
+        element.num = index + 1
+        this.DataTable.push(element)
+      })
+      this.StatusApi = false
     }
   }
 }

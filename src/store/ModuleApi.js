@@ -1,4 +1,6 @@
 const axios = require('axios')
+const { Decode } = require('@/services')
+
 const ModuleApi = {
   state: {
     DataLogin: '',
@@ -103,7 +105,9 @@ const ModuleApi = {
     },
     async GetReport (context, val) {
       var data = ''
-      if (val.type === 'ALL') {
+      var checkuser = JSON.parse(Decode.decode(localStorage.getItem('user')))
+      // console.log('checkuser หน้า report', checkuser)
+      if (val.type === 'ALL' || checkuser.userType === 'SUPERADMIN') {
         data = {
           where: "WHERE (req.status = 'WAITING' OR req.status = 'PROCESSING')"
         }
@@ -117,7 +121,8 @@ const ModuleApi = {
     },
     async GetHistory (context, val) {
       var data = ''
-      if (val.type === 'ALL') {
+      var checkuser = JSON.parse(Decode.decode(localStorage.getItem('user')))
+      if (val.type === 'ALL' || checkuser.userType === 'SUPERADMIN') {
         data = {
           where: "WHERE (req.status = 'FINISHED' OR req.status = 'CANCEL')"
         }

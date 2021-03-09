@@ -29,17 +29,23 @@ export default {
   },
   async created () {
     this.$EventBus.$emit('StatusHeader', 'Manage Service Section')
-    await this.$store.dispatch('GetUserService')
-    var data = this.$store.state.ModuleApi.DataUserService
-    data.data.forEach((element, index) => {
-      element.num = index + 1
-      this.DataTable.push(element)
-    })
-    this.StatusApi = false
+    setInterval(() => {
+      this.GetDataTable()
+    }, 10000)
   },
   methods: {
     CreateService () {
       this.$router.push({ path: '/CreateUser?State=SERVICE' }).catch(() => {})
+    },
+    async GetDataTable () {
+      this.DataTable = []
+      await this.$store.dispatch('GetUserService')
+      var data = this.$store.state.ModuleApi.DataUserService
+      data.data.forEach((element, index) => {
+        element.num = index + 1
+        this.DataTable.push(element)
+      })
+      this.StatusApi = false
     }
   }
 }
