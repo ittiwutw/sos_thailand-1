@@ -86,7 +86,7 @@ export default {
       await this.$store.commit('SetModal')
     },
     SetDataTable (val) {
-      var data = [...val]
+      var data = val
       data.forEach((item, index) => {
         item.num = index + 1
         if (item.activeFlag === 1) {

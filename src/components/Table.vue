@@ -97,7 +97,7 @@ export default {
       this.$router.push({ path: '/CreateUser?State=OFFICER' }).catch(() => {})
     },
     SetDataTable (val) {
-      var data = [...val]
+      var data = val
       data.forEach((item, index) => {
         item.num = index + 1
         if (item.activeFlag === 1) {
@@ -123,7 +123,7 @@ export default {
       var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
       await this.$store.dispatch('GetUserOfficer', user.adminCompanyName)
       var data = this.$store.state.ModuleApi.DataUserOfficer.data
-      // // console.log('data officer =', data)
+      console.log('data officer =', data)
       this.SetDataTable(data)
     }
   }
