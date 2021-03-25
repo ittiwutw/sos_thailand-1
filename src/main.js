@@ -12,6 +12,9 @@ import 'vue-thailand-address/dist/vue-thailand-address.css'
 import 'ant-design-vue/dist/antd.css'
 import 'vue-sequential-entrance/vue-sequential-entrance.css'
 import 'sweetalert2/dist/sweetalert2.min.css'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
 Vue.use(VueThailandAddress)
 Vue.use(VueSweetalert2)
 Vue.use(SequentialEntrance)

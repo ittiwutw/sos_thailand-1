@@ -37,7 +37,7 @@
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
                 <span>คะเเนน :</span>
-                <!-- <span>{{props.ratingPoint[0]}}</span> -->
+                <span>{{rating}}</span>
               </a-row>
             </a-col>
             <a-col :span='12'>
@@ -106,7 +106,8 @@ export default {
   props: ['props'],
   data () {
     return {
-      route: ''
+      route: '',
+      rating: 0
     }
   },
   computed: {
@@ -117,6 +118,7 @@ export default {
   watch: {
     props (val) {
       console.log('prop user', val)
+      this.GetRating(val)
       if (this.$router.currentRoute.name === 'ManageService') {
         this.route = 'ManageService'
         this.props.adminDistrict = val.serviceDistrict
@@ -126,6 +128,17 @@ export default {
   methods: {
     CloseModal () {
       this.$store.commit('SetModal')
+    },
+    async GetRating (val) {
+      this.rating = 0
+      var data = await this.axios.get(`${process.env.VUE_APP_API}/getRatingByUserId?userId=${val.userId}`)
+      // var data = await this.axios.get(`${process.env.VUE_APP_API}/getRatingByUserId?userId=132`)
+      for (let i = 0; i < data.data.data.length; i++) {
+        this.rating += data.data.data[i].ratingPoint
+      }
+      if (data.data.rating !== null) {
+        this.rating = this.rating / data.data.rating
+      }
     }
   }
 }
