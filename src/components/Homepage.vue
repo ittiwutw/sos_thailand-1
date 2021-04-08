@@ -48,6 +48,7 @@ export default {
         // { key: 'manu1', text: 'Manage เจ้าหน้าที่', path: '/', name: 'ManageOfficer' },
         { key: 'manu2', text: 'Manage Service Section', path: '/ManageService', name: 'ManageService' },
         { key: 'manu3', text: 'Manage Area Admin', path: '/ManageAdmin', name: 'ManageAdmin' },
+        { key: 'manu9', text: 'เเจ้งเตือนผู้ใช้', path: '/SendMessage', name: 'SendMessage' },
         { key: 'manu4', text: 'รายงานการเเจ้งเหตุ', path: '/Report', name: 'Report' },
         { key: 'manu5', text: 'ประวัติการเเจ้งเหตุ', path: '/History', name: 'History' },
         { key: 'manu6', text: 'เเก้ไขข้อมูล', path: '/EditUser', name: 'EditUser' },

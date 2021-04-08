@@ -18,7 +18,8 @@ const routes = [
       { path: '/History', name: 'History', component: () => import('@/views/IncidentHistory') },
       { path: '/EditUser', name: 'EditUser', component: () => import('@/views/EditUser') },
       { path: '/CreateUser', name: 'CreateUser', component: () => import('@/views/CreateUser') },
-      { path: '/AddService', name: 'AddService', component: () => import('@/views/ListService') }
+      { path: '/AddService', name: 'AddService', component: () => import('@/views/ListService') },
+      { path: '/SendMessage', name: 'SendMessage', component: () => import('@/views/SendMessage') }
     ]
   }
 ]
