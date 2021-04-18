@@ -79,7 +79,7 @@
               <v-autocomplete outlined dense :items="Listarea" v-model="SelectArea" item-text="name" item-value="name" placeholder="พื้นที่รับผิดชอบตาม" disabled :rules="Rules.location"></v-autocomplete>
             </a-col>
           </a-row>
-          <a-row type="flex" class="mb-5" v-if="userType === 'SUPERADMIN'">
+          <a-row type="flex" class="mb-0" v-if="userType === 'SUPERADMIN'">
             <a-col :md="4" :xs="8" class="mt-2" v-if="(SelectArea === 'เขต' || SelectArea === 'เเขวง' || SelectArea === 'จังหวัด') ">
               <span>เขตพื้นที่รับผิดชอบ : </span>
             </a-col>
@@ -97,7 +97,7 @@
               </a-row>
             </a-col>
           </a-row>
-          <a-row type="flex" class="mb-5" v-else>
+          <a-row type="flex" class="mb-0" v-else>
             <!-- <a-col :md="4" :xs="8" class="mt-2">
               <span>เขตพื้นที่รับผิดชอบ : </span>
             </a-col>
@@ -114,6 +114,20 @@
                 </a-col>
               </a-row>
             </a-col> -->
+          </a-row>
+          <a-row type="flex" class="mb-5">
+            <a-col :md="4" :xs="4" class="mt-5">
+              <span>ลักษณะงาน : </span>
+            </a-col>
+            <a-col :md='20' :xs="20">
+            <a-row type="flex" :gutter="[-10,-10]">
+              <a-col :span="24" :md="6" class="pa-0" v-for="(item,index) in items" :key="index">
+                <a-row type="flex" justify="start">
+                  <v-checkbox v-model="selected" :label="item.name" :value="item.name"></v-checkbox>
+                </a-row>
+              </a-col>
+            </a-row>
+            </a-col>
           </a-row>
           <a-row type="flex" class="mb-5">
             <a-col :md="4" :xs="8" >
@@ -172,6 +186,13 @@ export default {
   props: ['Header'],
   data () {
     return {
+      selected: ['John'],
+      items: [
+        { name: 'จี้ปล้น' },
+        { name: 'อุบัติเหตุ' },
+        { name: 'คุกคามทางเพศ' },
+        { name: 'toursim service' }
+      ],
       userType: 'SUPERADMIN',
       show: false,
       lazy: false,
@@ -276,6 +297,7 @@ export default {
       this.subdistrict = user.adminSubDistrict
       this.district = user.adminDistrict
       this.province = user.adminProvince
+      this.selected = user.serviceTypeList || []
       if (user.logoImg !== 'null') {
         this.Imageurl = user.logoImg
       }
@@ -295,6 +317,7 @@ export default {
         this.subdistrict = user.adminSubDistrict
         this.district = user.adminDistrict
         this.province = user.adminProvince
+        this.selected = user.serviceTypeList || []
         if (user.adminAreaType === 'SUBDISTRICT') {
           this.SelectArea = 'เเขวง'
           this.subdistrict = user.adminSubDistrict
@@ -385,7 +408,8 @@ export default {
         adminProvince: user.adminProvince,
         adminDistrict: user.adminDistrict,
         adminSubDistrict: user.adminSubDistrict,
-        adminCompanyName: user.adminCompanyName
+        adminCompanyName: user.adminCompanyName,
+        serviceTypeList: this.selected
       }
       console.log('ก่อนยิง data', data)
       await this.$store.dispatch('CreateUser', data)
@@ -443,7 +467,8 @@ export default {
         adminProvince: this.province,
         adminDistrict: this.district,
         adminSubDistrict: this.subdistrict,
-        adminCompanyName: this.location
+        adminCompanyName: this.location,
+        serviceTypeList: this.selected
       }
       console.log('data ก่อนสร้าง user', data)
       await this.$store.dispatch('CreateUser', data)
@@ -508,6 +533,8 @@ export default {
       if (this.ImageBase64 !== '') {
         user.logoImg = this.ImageBase64
       }
+      user.serviceTypeList = this.selected
+      console.log('user', user)
       await this.$store.dispatch('EditUser', user)
       var res = this.$store.state.ModuleApi.EditUser
       // // console.log('res หลังยิง', res)
@@ -520,7 +547,7 @@ export default {
         })
         localStorage.removeItem('user')
         localStorage.setItem('user', Encode.encode(res.data))
-        window.location.reload()
+        // window.location.reload()
       } else {
         this.$swal({
           icon: 'error',
