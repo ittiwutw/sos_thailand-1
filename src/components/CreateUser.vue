@@ -80,19 +80,19 @@
             </a-col>
           </a-row>
           <a-row type="flex" class="mb-0" v-if="userType === 'SUPERADMIN'">
-            <a-col :md="4" :xs="8" class="mt-2" v-if="(SelectArea === 'เขต' || SelectArea === 'เเขวง' || SelectArea === 'จังหวัด') ">
+            <a-col :md="4" :xs="8" class="mt-2" v-if="(SelectArea === 'เขต/อำเภอ' || SelectArea === 'เเขวง/ตำบล' || SelectArea === 'จังหวัด') ">
               <span>เขตพื้นที่รับผิดชอบ : </span>
             </a-col>
             <a-col :md='14' :xs="16">
               <a-row type="flex" :gutter="[16,0]">
                 <a-col :span='24'>
-                  <v-autocomplete v-if="(SelectArea === 'เขต' || SelectArea === 'เเขวง' || SelectArea === 'จังหวัด') " outlined dense :items="ListProvince" v-model="province" item-text="name_th" item-value="name_th" placeholder="จังหวัด" :rules="Rules.province"></v-autocomplete>
+                  <v-autocomplete v-if="(SelectArea === 'เขต/อำเภอ' || SelectArea === 'เเขวง/ตำบล' || SelectArea === 'จังหวัด') " outlined dense :items="ListProvince" v-model="province" item-text="name_th" item-value="name_th" placeholder="จังหวัด" :rules="Rules.province"></v-autocomplete>
                 </a-col>
                 <a-col :span='24'>
-                  <v-autocomplete v-if="(SelectArea === 'เขต' || SelectArea === 'เเขวง') " outlined dense :items="ListDistrict" v-model="district" item-text="name_th" item-value="name_th" placeholder="เขต/อำเภอ" :rules="Rules.district"></v-autocomplete>
+                  <v-autocomplete v-if="(SelectArea === 'เขต/อำเภอ' || SelectArea === 'เเขวง/ตำบล') " outlined dense :items="ListDistrict" v-model="district" item-text="name_th" item-value="name_th" placeholder="เขต/อำเภอ" :rules="Rules.district"></v-autocomplete>
                 </a-col>
                 <a-col :span='24'>
-                  <v-autocomplete v-if="SelectArea === 'เเขวง'" outlined dense :items="ListSubDistrict" v-model="subdistrict" item-text="name_th" item-value="name_th" placeholder="เเขวง/ตำบล" :rules="Rules.subdistrict"></v-autocomplete>
+                  <v-autocomplete v-if="SelectArea === 'เเขวง/ตำบล'" outlined dense :items="ListSubDistrict" v-model="subdistrict" item-text="name_th" item-value="name_th" placeholder="เเขวง/ตำบล" :rules="Rules.subdistrict"></v-autocomplete>
                 </a-col>
               </a-row>
             </a-col>
