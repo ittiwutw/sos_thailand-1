@@ -246,6 +246,7 @@ export default {
   },
   watch: {
     SelectArea (val) {
+      // console.log('val = ', val)
       this.subdistrict = ''
       this.district = ''
       this.province = ''
@@ -278,10 +279,10 @@ export default {
     // console.log('User Tbnoung', user)
     if (this.Header === 'เเก้ไขผู้ใช้งาน') {
       if (user.adminAreaType === 'SUBDISTRICT') {
-        this.SelectArea = 'เเขวง'
+        this.SelectArea = 'เเขวง/ตำบล'
         this.subdistrict = user.adminResponsibilityArea
       } else if (user.adminAreaType === 'DISTRICT') {
-        this.SelectArea = 'เขต'
+        this.SelectArea = 'เขต/อำเภอ'
         this.district = user.adminResponsibilityArea
       } else if (user.adminAreaType === 'PROVINCE') {
         this.SelectArea = 'จังหวัด'
@@ -319,10 +320,10 @@ export default {
         this.province = user.adminProvince
         this.selected = user.serviceTypeList || []
         if (user.adminAreaType === 'SUBDISTRICT') {
-          this.SelectArea = 'เเขวง'
+          this.SelectArea = 'เเขวง/ตำบล'
           this.subdistrict = user.adminSubDistrict
         } else if (user.adminAreaType === 'DISTRICT') {
-          this.SelectArea = 'เขต'
+          this.SelectArea = 'เขต/อำเภอ'
           this.district = user.adminDistrict
         } else {
           this.SelectArea = 'จังหวัด'
@@ -441,16 +442,16 @@ export default {
     async CreateUser () {
       var adminAreaType = ''
       var CheckArea = ''
-      if (this.SelectArea === 'เเขวง') {
+      if (this.SelectArea === 'เเขวง/ตำบล') {
         adminAreaType = 'SUBDISTRICT'
         CheckArea = this.subdistrict
-      } else if (this.SelectArea === 'เขต') {
+      } else if (this.SelectArea === 'เขต/อำเภอ') {
         adminAreaType = 'DISTRICT'
         CheckArea = this.district
       } else if (this.SelectArea === 'จังหวัด') {
         adminAreaType = 'PROVINCE'
         CheckArea = this.province
-      } else {
+      } else if (this.SelectArea === 'ระดับประเทศ') {
         adminAreaType = 'ALL'
         CheckArea = ''
       }
@@ -502,10 +503,10 @@ export default {
       var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
       var adminAreaType = ''
       var CheckArea = ''
-      if (this.SelectArea === 'เเขวง') {
+      if (this.SelectArea === 'เเขวง/ตำบล') {
         adminAreaType = 'SUBDISTRICT'
         CheckArea = this.subdistrict
-      } else if (this.SelectArea === 'เขต') {
+      } else if (this.SelectArea === 'เขต/อำเภอ') {
         adminAreaType = 'DISTRICT'
         CheckArea = this.district
       } else if (this.SelectArea === 'จังหวัด') {
