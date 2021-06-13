@@ -7,6 +7,7 @@ const ModuleApi = {
     DataUserOfficer: '',
     DataUserService: '',
     DataUserAdmin: '',
+    DataAllUser: '',
     Modal: false,
     DataReport: '',
     DataHistory: '',
@@ -19,7 +20,8 @@ const ModuleApi = {
     CreateListService: '',
     ModalListService: false,
     EditListService: '',
-    DeleteListService: ''
+    DeleteListService: '',
+    DeleteUser: ''
   },
   mutations: {
     SetModalListService (state) {
@@ -36,6 +38,9 @@ const ModuleApi = {
     },
     SetDataUserAdmin (state, data) {
       state.DataUserAdmin = data
+    },
+    SetDataAllUser (state, data) {
+      state.DataAllUser = data
     },
     SetModal (state) {
       state.Modal = !state.Modal
@@ -72,6 +77,9 @@ const ModuleApi = {
     },
     SetDeleteListService (state, data) {
       state.DeleteListService = data
+    },
+    SetDeleteUser (state, data) {
+      state.DeleteUser = data
     }
   },
   actions: {
@@ -98,6 +106,13 @@ const ModuleApi = {
     async GetUserAdmin (context) {
       var res = await axios.get(`${process.env.VUE_APP_API}/getAllUserByUserType?userType=ADMIN`)
       context.commit('SetDataUserAdmin', res.data)
+    },
+    async GetAllUser (context) {
+      var data = {
+        where: ''
+      }
+      var res = await axios.post(`${process.env.VUE_APP_API}/getUsersByCondition`, data)
+      context.commit('SetDataAllUser', res.data)
     },
     async GetUserService (context) {
       var res = await axios.get(`${process.env.VUE_APP_API}/getAllUserByUserType?userType=SERVICE`)
@@ -181,6 +196,10 @@ const ModuleApi = {
       var res = await axios.post(`${process.env.VUE_APP_API}/deleteMaster`, val)
       console.log('delete ===', res)
       context.commit('SetDeleteListService', res.data)
+    },
+    async DeleteUser (context, val) {
+      var res = await axios.post(`${process.env.VUE_APP_API}/deleteUser`, val)
+      context.commit('SetDeleteUser', res.data)
     }
   }
 }

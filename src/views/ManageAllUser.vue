@@ -2,7 +2,7 @@
   <div>
     <a-row type="flex" justify="center">
       <a-col :xs="24" :md="20" class="mt-5 mb-5">
-        <span class="headline">Manage Area Admin</span>
+        <span class="headline">จัดการผู้ใช้งานทั้งหมด</span>
       </a-col>
       <!-- <a-col :xs="24" :md="20" class="mb-3">
         <a-row type="flex">
@@ -10,7 +10,7 @@
         </a-row>
       </a-col> -->
       <a-col :span='24'>
-        <Table :props="DataTable" :StatusApi="StatusApi" type="" />
+        <Table :props="DataTable" :StatusApi="StatusApi" type="all" />
       </a-col>
     </a-row>
   </div>
@@ -27,14 +27,8 @@ export default {
       DataTable: []
     }
   },
-  mounted () {
-    this.$EventBus.$on('fetchUser', this.GetDataTable)
-    this.$on('hook:beforeDestroy', () => {
-      this.$EventBus.$off('fetchUser')
-    })
-  },
   async created () {
-    this.$EventBus.$emit('StatusHeader', 'Manage Area Admin')
+    this.$EventBus.$emit('StatusHeader', 'จัดการผู้ใช้งานทั้งหมด')
     setInterval(() => {
       this.GetDataTable()
     }, 10000)
@@ -45,8 +39,8 @@ export default {
     },
     async GetDataTable () {
       this.DataTable = []
-      await this.$store.dispatch('GetUserAdmin')
-      var data = this.$store.state.ModuleApi.DataUserAdmin
+      await this.$store.dispatch('GetAllUser')
+      var data = this.$store.state.ModuleApi.DataAllUser
       data.data.forEach((element, index) => {
         element.num = index + 1
         this.DataTable.push(element)

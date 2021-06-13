@@ -10,7 +10,7 @@
         </a-row>
       </a-col> -->
       <a-col :span='24'>
-        <Table :props="DataTable" :StatusApi="StatusApi" />
+        <Table :props="DataTable" :StatusApi="StatusApi" type="" />
       </a-col>
     </a-row>
   </div>

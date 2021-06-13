@@ -48,6 +48,7 @@ export default {
         // { key: 'manu1', text: 'Manage เจ้าหน้าที่', path: '/', name: 'ManageOfficer' },
         { key: 'manu2', text: 'Manage Service Section', path: '/ManageService', name: 'ManageService' },
         { key: 'manu3', text: 'Manage Area Admin', path: '/ManageAdmin', name: 'ManageAdmin' },
+        { key: 'manu10', text: 'จัดการผู้ใช้งานทั้งหมด', path: '/ManageAllUser', name: 'ManageAllUser' },
         { key: 'manu9', text: 'เเจ้งเตือนผู้ใช้', path: '/SendMessage', name: 'SendMessage' },
         { key: 'manu4', text: 'รายงานการเเจ้งเหตุ', path: '/Report', name: 'Report' },
         { key: 'manu5', text: 'ประวัติการเเจ้งเหตุ', path: '/History', name: 'History' },
@@ -57,6 +58,15 @@ export default {
       ],
       NavigatorAdmin: [
         { key: 'manu1', text: 'Manage Officer Section', path: '/', name: 'ManageOfficer' },
+        // { key: 'manu2', text: 'อนุมัติเจ้าหน้าที่', path: '/ApprovedOfficer', name: 'ApprovedOfficer' },
+        { key: 'manu3', text: 'รายงานการเเจ้งเหตุ', path: '/Report', name: 'Report' },
+        { key: 'manu4', text: 'ประวัติการเเจ้งเหตุ', path: '/History', name: 'History' },
+        { key: 'manu5', text: 'เเก้ไขข้อมูล', path: '/EditUser', name: 'EditUser' }
+        // { icon: 'mdi-chart-timeline-variant', text: 'ระบบบัญชีและการเงิน' },
+        // { icon: 'mdi-chart-timeline-variant', text: 'ระบบบริหารบุคลากร', child: [{ name: 'Tbnoung' }] }
+      ],
+      NavigatorAdminCompanyName: [
+        // { key: 'manu1', text: 'Manage Officer Section', path: '/', name: 'ManageOfficer' },
         // { key: 'manu2', text: 'อนุมัติเจ้าหน้าที่', path: '/ApprovedOfficer', name: 'ApprovedOfficer' },
         { key: 'manu3', text: 'รายงานการเเจ้งเหตุ', path: '/Report', name: 'Report' },
         { key: 'manu4', text: 'ประวัติการเเจ้งเหตุ', path: '/History', name: 'History' },
@@ -89,7 +99,11 @@ export default {
       this.picture = checkuser.logoImg
     }
     if (checkuser.userType === 'ADMIN') {
-      this.Navigator = this.NavigatorAdmin
+      if (checkuser.adminCompanyName === 'ทั่วประเทศ') {
+        this.Navigator = this.NavigatorAdminCompanyName
+      } else {
+        this.Navigator = this.NavigatorAdmin
+      }
     } else if (checkuser.userType === 'SUPERADMIN') {
       this.Navigator = this.NavigatorSuperAdmin
       this.Header = 'Manage ผู้ให้บริการ'

@@ -2,7 +2,7 @@
   <div>
     <loading :active.sync="StatusApi"></loading>
     <a-row type="flex" justify="center">
-      <a-col :span="24" class="mb-5">
+      <a-col :span="24" v-if="type !== 'all'">
         <a-row type="flex">
           <a-col :span="5" class="mb-3" offset="2">
               <a-button type="primary" @click="CreateOfficer" v-if="StatusUser === 'ADMIN'">สร้างเจ้าหน้าที่</a-button>
@@ -13,7 +13,7 @@
           </a-col>
         </a-row>
       </a-col>
-      <a-col :xs="24" :md="20">
+      <a-col :xs="24" :md="20" class="mt-5">
         <v-card outlined>
             <v-data-table
             :headers="headers"
@@ -35,7 +35,10 @@
                 </v-row>
           </template>
           <template v-slot:[`item.edit3`]="{ item }">
-                <a-button @click="detail(item)">รายละเอียด</a-button>
+            <a-button @click="detail(item)">รายละเอียด</a-button>
+          </template>
+          <template v-slot:[`item.delete`]="{ item }">
+            <a-icon @click="deleteUser(item)" class="pl-0" type="delete" />
           </template>
           </v-data-table>
         </v-card>
@@ -57,7 +60,7 @@ export default {
     Modal,
     Loading
   },
-  props: ['props', 'StatusApi'],
+  props: ['props', 'StatusApi', 'type'],
   data () {
     return {
       StatusUser: 'ADMIN',
@@ -67,7 +70,19 @@ export default {
       page: 1,
       itemsPerPage: 10,
       search: '',
-      headers: [
+      headers: [],
+      headersUser: [
+        { text: 'ลำดับ', sortable: false, value: 'num', align: 'center' },
+        { text: 'ชื่อ', sortable: false, value: 'name', align: 'center' },
+        { text: 'สถานที่ปฏิบัติงาน', sortable: false, value: 'adminCompanyName', align: 'center' },
+        { text: 'หมายเลขโทรศัพท์', sortable: false, value: 'tel', align: 'center' },
+        { text: 'เขต', sortable: false, value: 'adminDistrict', align: 'center' },
+        { text: 'สถานะ', sortable: false, value: 'activeFlag', align: 'center' },
+        { text: 'ใช้งาน/ไม่ใช้งาน', sortable: false, value: 'edit', align: 'center' },
+        { text: 'รายละเอียด', sortable: false, value: 'edit3', align: 'center' },
+        { text: 'delete', sortable: false, value: 'delete', align: 'center' }
+      ],
+      headersAlluser: [
         { text: 'ลำดับ', sortable: false, value: 'num', align: 'center' },
         { text: 'ชื่อ', sortable: false, value: 'name', align: 'center' },
         { text: 'สถานที่ปฏิบัติงาน', sortable: false, value: 'adminCompanyName', align: 'center' },
@@ -83,6 +98,11 @@ export default {
     var checkuser = JSON.parse(Decode.decode(localStorage.getItem('user')))
     // console.log('this.props', checkuser)
     this.StatusUser = checkuser.userType
+    if (this.type === 'all') {
+      this.headers = this.headersAlluser
+    } else {
+      this.headers = this.headersUser
+    }
   },
   watch: {
     props (val) {
@@ -125,6 +145,29 @@ export default {
       var data = this.$store.state.ModuleApi.DataUserOfficer.data
       console.log('data officer =', data)
       this.SetDataTable(data)
+    },
+    async deleteUser (item) {
+      var data = {
+        userId: item.userId
+      }
+      await this.$store.dispatch('DeleteUser', data)
+      var res = this.$store.state.ModuleApi.DeleteUser
+      if (res.response_description === 'SUCCESS') {
+        this.$swal({
+          icon: 'success',
+          text: `Delete user ${res.response_description}`,
+          showConfirmButton: false,
+          timer: 2000
+        })
+        this.$EventBus.$emit('fetchUser')
+      } else {
+        this.$swal({
+          icon: 'error',
+          text: res.response_description,
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }
     }
   }
 }
