@@ -99,7 +99,7 @@ export default {
       this.picture = checkuser.logoImg
     }
     if (checkuser.userType === 'ADMIN') {
-      if (checkuser.adminCompanyName === 'ทั่วประเทศ') {
+      if (checkuser.adminCompanyName === 'Thailand') {
         this.Navigator = this.NavigatorAdminCompanyName
       } else {
         this.Navigator = this.NavigatorAdmin
