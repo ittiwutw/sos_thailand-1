@@ -11,11 +11,11 @@ const routes = [
     path: '/',
     component: Homepage,
     children: [
-      { path: '/', name: 'ManageOfficer', component: () => import('@/views/ManageOfficer') },
+      { path: '/ManageOfficer', name: 'ManageOfficer', component: () => import('@/views/ManageOfficer') },
       { path: '/ManageService', name: 'ManageService', component: () => import('@/views/ManageService') },
       { path: '/ManageAdmin', name: 'ManageAdmin', component: () => import('@/views/ManageAdmin') },
       { path: '/ManageAllUser', name: 'ManageAllUser', component: () => import('@/views/ManageAllUser') },
-      { path: '/Report', name: 'Report', component: () => import('@/views/AccidentReport') },
+      { path: '/', name: 'Report', component: () => import('@/views/AccidentReport') },
       { path: '/History', name: 'History', component: () => import('@/views/IncidentHistory') },
       { path: '/EditUser', name: 'EditUser', component: () => import('@/views/EditUser') },
       { path: '/CreateUser', name: 'CreateUser', component: () => import('@/views/CreateUser') },
