@@ -49,18 +49,18 @@
           </a-row>
           <a-row type="flex" v-if="userType === 'SUPERADMIN'">
             <a-col :md="4" :xs="8" class="mt-2">
-              <span>สถานที่ปฏิบัติงาน : </span>
+              <span>หน่วยงานปฎิบัติงาน : </span>
             </a-col>
             <a-col :md='14' :xs="16">
-              <v-text-field outlined dense v-model="location" placeholder="สถานที่ปฏิบัติงาน" :rules="Rules.location"></v-text-field>
+              <v-text-field outlined dense v-model="location" placeholder="หน่วยงานปฎิบัติงาน" :rules="Rules.location"></v-text-field>
             </a-col>
           </a-row>
           <a-row type="flex" v-else>
             <a-col :md="4" :xs="8" class="mt-2">
-              <span>สถานที่ปฏิบัติงาน : </span>
+              <span>หน่วยงานปฎิบัติงาน : </span>
             </a-col>
             <a-col :md='14' :xs="16">
-              <v-text-field outlined dense v-model="location" placeholder="สถานที่ปฏิบัติงาน" :rules="Rules.location" disabled></v-text-field>
+              <v-text-field outlined dense v-model="location" placeholder="หน่วยงานปฎิบัติงาน" :rules="Rules.location" disabled></v-text-field>
             </a-col>
           </a-row>
           <a-row type="flex" v-if="userType === 'SUPERADMIN'">
@@ -226,7 +226,7 @@ export default {
         province: [(v) => !!v || 'กรุณาเลือกจังหวัด'],
         district: [(v) => !!v || 'กรุณาเลือก เขต/อำเภอ'],
         subdistrict: [(v) => !!v || 'กรุณาเลือก เเขวง/ตำบล'],
-        location: [(v) => !!v || 'กรุณาระบุสถานที่ปฏิบัติงาน'],
+        location: [(v) => !!v || 'กรุณาระบุหน่วยงานที่ปฎิบัติงาน'],
         email: [
           (v) => !!v || 'กรุณากรอกข้อมูล',
           (v) => /.+@.+\..+/.test(v) || 'รูปแบบของ email ไม่ถูกต้อง'

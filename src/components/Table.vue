@@ -74,7 +74,7 @@ export default {
       headersUser: [
         { text: 'ลำดับ', sortable: false, value: 'num', align: 'center' },
         { text: 'ชื่อ', sortable: false, value: 'name', align: 'center' },
-        { text: 'สถานที่ปฏิบัติงาน', sortable: false, value: 'adminCompanyName', align: 'center' },
+        { text: 'หน่วยงานปฎิบัติงาน', sortable: false, value: 'adminCompanyName', align: 'center' },
         { text: 'หมายเลขโทรศัพท์', sortable: false, value: 'tel', align: 'center' },
         { text: 'เขต', sortable: false, value: 'adminDistrict', align: 'center' },
         { text: 'สถานะ', sortable: false, value: 'activeFlag', align: 'center' },
@@ -85,7 +85,7 @@ export default {
       headersAlluser: [
         { text: 'ลำดับ', sortable: false, value: 'num', align: 'center' },
         { text: 'ชื่อ', sortable: false, value: 'name', align: 'center' },
-        { text: 'สถานที่ปฏิบัติงาน', sortable: false, value: 'adminCompanyName', align: 'center' },
+        { text: 'หน่วยงานปฎิบัติงาน', sortable: false, value: 'adminCompanyName', align: 'center' },
         { text: 'หมายเลขโทรศัพท์', sortable: false, value: 'tel', align: 'center' },
         { text: 'เขต', sortable: false, value: 'adminDistrict', align: 'center' },
         { text: 'สถานะ', sortable: false, value: 'activeFlag', align: 'center' },

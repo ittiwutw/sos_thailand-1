@@ -1,49 +1,45 @@
 <template>
   <div>
-    <v-dialog v-model="Modal" width="45%" persistent>
+    <v-dialog v-model="Modal" width="85%" persistent>
       <v-card>
-        <v-card-title class="headline grey lighten-2">รายละเอียดเจ้าหน้าที่</v-card-title>
+        <v-card-title class="headline grey lighten-2">รายละเอียดการเรียกใช้บริการ</v-card-title>
         <v-card-text>
           <a-row type="flex">
             <a-col :span='12'>
-              <a-row type="flex" class="ma-5" justify="space-between">
-                <span>ชื่อ :</span>
-                <span>{{props.name}}</span>
+              <a-row type="flex" class="ma-5" justify="space-between" style="padding-top: 20px;">
+                <span><b>หมายเลขการเรียกใช้บริการ</b></span>
+                 <span><b>{{props.requestNumber}}</b></span>
+              </a-row>
+              <a-row type="flex" class="ma-5" justify="space-between" style="padding-top: 20px;">
+                <span><b>ผู้เรียกใช้บริการ</b></span>
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
-                <span>หน่วยงานปฎิบัติงาน :</span>
-                <span>{{props.adminCompanyName}}</span>
+                <span>ชื่อผู้เรียกใช้บริการ :</span>
+                <span>{{props.userReqName}}</span>
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
                 <span>หมายเลขโทรศัพท์ :</span>
-                <span>{{props.tel}}</span>
-              </a-row>
-              <a-row type="flex" class="ma-5" justify="space-between">
-                <span>พื้นที่รับผิดชอบ :</span>
-                <span v-if="props.adminAreaType === 'PROVINCE'">{{props.adminProvince}}</span>
-                <span v-else-if="props.adminAreaType === 'DISTRICT'">{{props.adminDistrict}}</span>
-                <span v-else>{{props.adminSubDistrict}}</span>
+                <span>{{props.userReqTel}}</span>
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
                 <span>อีเมล์ :</span>
-                <span>{{props.email}}</span>
+                <span>{{props.userReqEail}}</span>
               </a-row>
-              <a-row type="flex" class="ma-5" justify="space-between" v-if="route === ''">
-                <span>รหัสผ่าน :</span>
-                <span>{{props.password}}</span>
+              <a-row type="flex" class="ma-5" justify="space-between" style="padding-top: 20px;">
+                <span><b>เจ้าหน้าที่รับบริการ</b></span>
+              </a-row>
+              <a-row type="flex" class="ma-5" justify="space-between">
+                <span>ชื่อผู้ให้บริการ :</span>
+                <span>{{props.servicerName}}</span>
+              </a-row>
+              <a-row type="flex" class="ma-5" justify="space-between">
+                <span>เบอร์โทรศัพท์ผู้ให้บริการ :</span>
+                <span>{{props.servicerTel}}</span>
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
                 <span>คะเเนน :</span>
-                <span>{{rating}}</span>
+                <span>{{ratingPoint || '-'}}</span>
               </a-row>
-            </a-col>
-            <a-col :span='12'>
-              <a-card class="mt-2" v-if="(props.adminCardImg !== null || props.adminCardImg !== '')">
-                <v-img height="300px" :src="props.logoImg" />
-              </a-card>
-              <a-card class="mt-2" v-else>
-                <img width="100%" src="@/assets/logo_sos.png" />
-              </a-card>
             </a-col>
             <a-col :span="24" class="mt-5">
               <a-row type="flex" justify="end">

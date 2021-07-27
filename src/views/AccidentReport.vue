@@ -10,7 +10,7 @@
           <span>{{ Username }} </span><br>
           <span>อีเมล์ : </span>
           <span>{{ Email }}</span><br>
-          <span>สถานที่ปฏิบัติงาน : </span>
+          <span>หน่วยงานปฎิบัติงาน : </span>
           <span>{{ Location }}</span><br>
           <span>เขตการปกครอง : </span>
           <span>{{ Area }}</span><br>
@@ -47,6 +47,7 @@ export default {
     this.Email = user.email
     this.Location = user.adminCompanyName
     this.Area = user.adminProvince
+    this.GetDataTable()
     setInterval(() => {
       this.GetDataTable()
     }, 10000)

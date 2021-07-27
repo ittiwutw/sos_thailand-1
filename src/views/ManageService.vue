@@ -29,9 +29,9 @@ export default {
   },
   async created () {
     this.$EventBus.$emit('StatusHeader', 'Manage Service Section')
-    setInterval(() => {
-      this.GetDataTable()
-    }, 10000)
+    // setInterval(() => {
+    this.GetDataTable()
+    // }, 10000)
   },
   methods: {
     CreateService () {

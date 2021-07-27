@@ -35,9 +35,9 @@ export default {
   },
   async created () {
     this.$EventBus.$emit('StatusHeader', 'Manage Area Admin')
-    setInterval(() => {
-      this.GetDataTable()
-    }, 10000)
+    // setInterval(() => {
+    this.GetDataTable()
+    // }, 10000)
   },
   methods: {
     CreateAdmin () {

@@ -1,13 +1,21 @@
 <template>
   <div>
-    <v-dialog v-model="Modal" width="45%" persistent>
+    <v-dialog v-model="Modal" width="80%" persistent>
       <v-card>
-        <v-card-title class="headline grey lighten-2">{{Type}}</v-card-title>
+        <v-card-title class="headline grey lighten-2">หมายเลขแจ้งเหตุ: {{ Type }}</v-card-title>
         <v-card-text>
           <a-row type="flex">
-            <a-col :span='12'>
+            <a-col :span="12">
               <a-row type="flex" class="mt-5">
-                <span >รายละเอียดผู้เเจ้ง</span>
+                <span><b>รายละเอียดผู้เเจ้ง</b></span>
+              </a-row>
+              <a-row type="flex" class="ma-5" justify="space-between">
+                <span>วัน เวลา ที่แจ้งเหตุ :</span>
+                <span>{{ requestedDate }}</span>
+              </a-row>
+              <a-row type="flex" class="ma-5" justify="space-between">
+                <span>วัน เวลา ที่เจ้าหน้าที่รับเรื่อง :</span>
+                <span>{{ updatedDate }}</span>
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
                 <span>ชื่อผู้เเจ้งเหตุ :</span>
@@ -22,7 +30,7 @@
                 <span>{{ UserPhone }}</span>
               </a-row>
               <a-row type="flex" class="mt-5">
-                <span >รายละเอียดผู้รับเเจ้งเหตุ</span>
+                <span><b>รายละเอียดผู้รับเเจ้งเหตุ</b></span>
               </a-row>
               <a-row type="flex" class="ma-5" justify="space-between">
                 <span>ผู้รับเเจ้ง :</span>
@@ -45,7 +53,7 @@
                 <span>{{ discription }}</span>
               </a-row>
             </a-col>
-            <a-col :span='12'>
+            <a-col :span="12">
               <a-card class="mt-2">
                 <img width="100%" :src="Img" />
               </a-card>
@@ -56,12 +64,13 @@
               </a-row>
             </a-col>
           </a-row>
-         </v-card-text>
+        </v-card-text>
       </v-card>
     </v-dialog>
   </div>
 </template>
 <script>
+import moment from 'moment'
 export default {
   props: ['props'],
   data () {
@@ -75,7 +84,9 @@ export default {
       Officerphone: '-',
       Status: '-',
       Type: '-',
-      discription: '-'
+      discription: '-',
+      requestedDate: '',
+      updatedDate: ''
     }
   },
   computed: {
@@ -93,19 +104,26 @@ export default {
       this.Username = val.userReqName
       this.UserEmail = val.userReqEmail
       this.UserPhone = val.userReqTel
-      this.OfficerEmail = val.officerEmail
+      this.OfficerEmail = val.officerEmail || '-'
       // if (val.officerProfile.length !== 0) {
-      this.Officername = val.officerName
-      this.Officerphone = val.officerTel
+      this.Officername = val.officerName || '-'
+      this.Officerphone = val.officerTel || '-'
       // }
       this.discription = val.description
       this.Type = val.requestNumber
       this.Status = val.status
+      this.requestedDate = this.ConvertDate(val.requestDate)
+      this.updatedDate = this.ConvertDate(val.updatedAt)
     }
   },
   methods: {
     CloseModal () {
       this.$store.commit('SetModal')
+    },
+    ConvertDate (value) {
+      if (value) {
+        return moment(String(value)).format('DD/MM/YYYY hh:mm')
+      }
     }
   }
 }

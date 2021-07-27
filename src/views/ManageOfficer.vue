@@ -2,7 +2,7 @@
   <div>
     <a-row type="flex" justify="center">
       <a-col :xs="24" :md="20" class="mt-5 mb-5">
-        <span class="headline">Manage Officer Section</span>
+        <span class="headline">จัดการเจ้าหน้าที่</span>
       </a-col>
       <!-- <a-col :xs="24" :md="20" class="mb-3" v-if="DisableCreate !== 'ALL'">
         <a-row type="flex">

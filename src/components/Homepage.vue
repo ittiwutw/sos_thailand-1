@@ -46,21 +46,22 @@ export default {
       username: '',
       NavigatorSuperAdmin: [
         // { key: 'manu1', text: 'Manage เจ้าหน้าที่', path: '/ManageOfficer', name: 'ManageOfficer' },
-        { key: 'manu2', text: 'Manage Service Section', path: '/ManageService', name: 'ManageService' },
-        { key: 'manu3', text: 'Manage Area Admin', path: '/ManageAdmin', name: 'ManageAdmin' },
-        { key: 'manu10', text: 'จัดการผู้ใช้งานทั้งหมด', path: '/ManageAllUser', name: 'ManageAllUser' },
-        { key: 'manu9', text: 'เเจ้งเตือนผู้ใช้', path: '/SendMessage', name: 'SendMessage' },
         { key: 'manu4', text: 'รายงานการเเจ้งเหตุ', path: '/', name: 'Report' },
         { key: 'manu5', text: 'ประวัติการเเจ้งเหตุ', path: '/History', name: 'History' },
-        { key: 'manu6', text: 'เเก้ไขข้อมูล', path: '/EditUser', name: 'EditUser' },
-        { key: 'manu7', text: 'ประเภทการให้บริการ', path: '/AddService', name: 'AddService' }
+        { key: 'manu11', text: 'ประวัติการเรียกใช้บริการ', path: '/ServiceHistory', name: 'ServiceHistory' },
+        { key: 'manu3', text: 'จัดการ Area Admin', path: '/ManageAdmin', name: 'ManageAdmin' },
+        { key: 'manu10', text: 'จัดการผู้ใช้งานทั้งหมด', path: '/ManageAllUser', name: 'ManageAllUser' },
+        { key: 'manu7', text: 'ประเภทการให้บริการ', path: '/AddService', name: 'AddService' },
+        { key: 'manu2', text: 'จัดการผู้ให้บริการ', path: '/ManageService', name: 'ManageService' },
+        { key: 'manu6', text: 'เเก้ไขข้อมูลส่วนตัว', path: '/EditUser', name: 'EditUser' },
+        { key: 'manu9', text: 'เเจ้งเตือนผู้ใช้', path: '/SendMessage', name: 'SendMessage' }
         // { icon: 'mdi-chart-timeline-variant', text: 'ระบบบริหารบุคลากร', child: [{ name: 'Tbnoung' }] }
       ],
       NavigatorAdmin: [
         // { key: 'manu2', text: 'อนุมัติเจ้าหน้าที่', path: '/ApprovedOfficer', name: 'ApprovedOfficer' },
         { key: 'manu3', text: 'รายงานการเเจ้งเหตุ', path: '/', name: 'Report' },
         { key: 'manu4', text: 'ประวัติการเเจ้งเหตุ', path: '/History', name: 'History' },
-        { key: 'manu1', text: 'Manage Officer Section', path: '/ManageOfficer', name: 'ManageOfficer' },
+        { key: 'manu1', text: 'จัดการเจ้าหน้าที่', path: '/ManageOfficer', name: 'ManageOfficer' },
         { key: 'manu5', text: 'เเก้ไขข้อมูล', path: '/EditUser', name: 'EditUser' }
         // { icon: 'mdi-chart-timeline-variant', text: 'ระบบบัญชีและการเงิน' },
         // { icon: 'mdi-chart-timeline-variant', text: 'ระบบบริหารบุคลากร', child: [{ name: 'Tbnoung' }] }
@@ -107,7 +108,7 @@ export default {
     } else if (checkuser.userType === 'SUPERADMIN') {
       this.Navigator = this.NavigatorSuperAdmin
       this.Header = 'Manage ผู้ให้บริการ'
-      this.$router.push({ path: '/ManageService' }).catch(() => {})
+      this.$router.push({ path: '/' }).catch(() => {})
     } else {
       this.Navigator = this.NavigatorDefault
     }

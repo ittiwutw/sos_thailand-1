@@ -2,9 +2,9 @@
   <div>
     <a-row type="flex" justify="center">
       <a-col :xs="24" :md="20" class="mt-5 mb-5">
-        <span class="headline">ประวัติการเเจ้งเหตุ</span>
+        <span class="headline">ประวัติการเรียกใช้บริการในระบบ</span>
       </a-col>
-      <a-col :xs="24" :md="20" class="mb-5">
+      <!-- <a-col :xs="24" :md="20" class="mb-5">
         <a-card>
           <span>ชื่อ : </span>
           <span>{{ Username }} </span><br>
@@ -15,7 +15,7 @@
           <span>เขตการปกครอง : </span>
           <span>{{ Area }}</span><br>
         </a-card>
-      </a-col>
+      </a-col> -->
       <a-col :span='24'>
         <Table :props="DataTable" :StatusApi="StatusApi" />
       </a-col>
@@ -23,7 +23,7 @@
   </div>
 </template>
 <script>
-import Table from '@/components/TableReport'
+import Table from '@/components/TableServiceReport'
 import { Decode } from '@/services'
 export default {
   components: {
@@ -40,7 +40,7 @@ export default {
     }
   },
   async created () {
-    this.$EventBus.$emit('StatusHeader', 'ประวัติการเเจ้งเหตุ')
+    this.$EventBus.$emit('StatusHeader', 'ประวัติการเรียกใช้บริการในระบบ')
     var user = JSON.parse(Decode.decode(localStorage.getItem('user')))
     this.Username = user.name
     this.Email = user.email
@@ -68,7 +68,7 @@ export default {
       } else {
         send.type = 'ALL'
       }
-      await this.$store.dispatch('GetHistory', send)
+      await this.$store.dispatch('GetAllServiceRequest', send)
       var data = this.$store.state.ModuleApi.DataHistory
       this.DataTable = []
       data.data.forEach((element, index) => {
